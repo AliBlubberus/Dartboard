@@ -1,0 +1,5 @@
+<svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="500" height="200" fill="#293C42"/>
+<path d="M0 50H500M0 150H500M0 100H500" stroke="#858D8F" stroke-opacity="0.5"/>
+<path d="M250 0V200M50 0V200M100 0V200M150 0V200M200 0V200M450 0V200M300 0V200M350 0V200M400 0V200" stroke="#858D8F" stroke-opacity="0.5"/>
+</svg>

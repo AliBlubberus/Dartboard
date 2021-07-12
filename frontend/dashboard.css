@@ -1,0 +1,750 @@
+/* imports */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Colors */
+    --dark-blue: #10555B;
+    --blue: #136E73;
+    --light-blue: #79BFB2;
+    --light-red: #F9A88E;
+    --red: #E9665D;
+
+    --dark-gray: #293C42;
+    --gray: #858D8F;
+    --white: #ECECEE;
+    --blue-black: #020B26;
+    --black: #090910;
+
+    --sidebar-background: #000010aa;
+    --card-background: #00001050;
+    --card-background-light: #ECECEE50;
+
+    --dark-grey-transparent: #293C42aa;
+    --blue-black-transparent: #020B26aa;
+    --light-red-transparent: #F9A88Eaa;
+    --red-transparent: #E9665Daa;
+    --light-blue-transparent: #79BFB2aa;
+    --blue-transparent: #136E73aa;
+
+    --player-one: #FF4631;
+    --player-two: #FF7F2E;
+    --player-three: #FEBA2B;
+    --player-four: #1BB778;
+    --player-five: #2F5DFB;
+    --player-six: #1A5173;
+    --player-seven: #3CA661;
+    --player-eight: #F2C230;
+    --player-nine: #F28A80;
+    --player-ten: #BF3030;
+
+    /* Font Settings */
+    font-family: 'Varela Round', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+}
+
+body{
+    background-color: var(--black);
+    background-image: url(svg/bullseye-solid.svg);
+    background-size: cover;
+}
+
+/* General Font Settings */
+
+h2{
+    color: var(--white);
+    font-size: 30px;
+    letter-spacing: 0.5rem;
+}
+
+h3{
+    color: var(--light-blue);
+    font-size: 16px;
+    letter-spacing: 0.2rem;
+}
+
+
+/* Sidebar */
+
+.sidebar {
+    z-index: 20;
+    background-color: var(--sidebar-background);
+    backdrop-filter: blur(5px);
+
+    height: 100vh;
+    width: 50px;
+
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+
+    justify-self: left;
+
+    transition: width 0.5s;
+    box-shadow: var(--black) 0 0 10px;
+}
+
+.sidebar:hover {
+    width: 300px;
+}
+
+.sidebar:hover .sidebarArrow{
+    transform: rotate(-180deg);
+}
+
+.arrowContainer {
+    width: 100%;
+    height: 50px;
+
+    display: grid;
+}
+
+.sidebarArrow {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+
+    fill: var(--white);
+
+    justify-self: right;
+    align-self: center;
+
+    transition: transform 0.5s;
+}
+
+.sidebarContent {
+    width: 100%;
+    flex: 3;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 50px;
+}
+
+.sidebarContentBottom {
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 50px;
+}
+
+/* Sidebar Entries */
+
+.sidebarEntry {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row-reverse;
+
+    box-shadow: 0;
+    transition: box-shadow 0.5s;
+
+    cursor: pointer;
+}
+
+.sidebarEntry:hover {
+    box-shadow: inset 30px 0 30px -31px var(--light-blue);
+}
+
+.sidebarTextContainer {
+    height: 100%;
+    flex: 1;
+
+    display: flex;
+
+    overflow: hidden;
+}
+
+.sidebarTextContainer h3 {
+    opacity: 0;
+
+    color: var(--gray);
+
+    margin-right: 10px;
+    flex: 1;
+    text-align: right;
+    align-self: center;
+    white-space: nowrap;
+
+    transition: opacity 0.5s, color 0.5s;
+}
+
+.sidebarEntry:hover .sidebarTextContainer h3 {
+    color: var(--light-blue);
+}
+
+.sidebar:hover .sidebarTextContainer h3 {
+    opacity: 1;
+}
+
+.sidebarIconContainer {
+    height: 100%;
+    width: 50px;
+}
+
+.sidebarIcon {
+    margin: 10px;
+
+    fill: var(--gray);
+
+    transition: fill 0.5s;
+}
+
+.sidebarEntry:hover .sidebarIcon {
+    fill: var(--light-blue);
+}
+
+
+/* Dashboard Cards */
+
+.dashboardMainLayout {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+}
+
+.dashboardCardLayout {
+    width: clamp(50vw, 95vw, 1440px);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-self: center;
+}
+
+.dashboardLeftColumn {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardMiddleColumn {
+    width: 200%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardRightColumn {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardCard {
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 20px;
+
+    margin: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: var(--card-background);
+    backdrop-filter: blur(20px);
+
+    border-style: solid;
+    border-width: 3px;
+    border-color: var(--light-blue);
+    box-shadow: var(--blue) 0 0 20px inset, var(--blue-black) 3px 3px 5px, var(--blue) 0 0 20px;
+}
+
+.cardTitle {
+    margin-top: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.dashboardCard h2 {
+    text-align: center;
+    font-size: clamp(10px, 2vw, 40px);
+    letter-spacing: clamp(0px, 0.4vw, 3px);
+}
+
+.cardContent {
+    width: 100%;
+    height: 100%;
+}
+
+/* Average Score Card */
+
+#averageScore {
+    flex: 1;
+    overflow: hidden;
+}
+
+#averageScore .cardContent {
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#averageScore .cardContent::-webkit-scrollbar {
+    display: none;
+}
+
+#averageScore .cardContent:nth-child(1) {
+    color: var(--blue);
+}
+
+.averageScoreEntry{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.averageScoreName{
+    height: 100%;
+    width: 200%;
+}
+
+.averageScoreValue{
+    height: 100%;
+    width: 100%;
+}
+
+.averageScoreName h3{
+    margin-left: 5px;
+    text-align: left;
+}
+
+.averageScoreValue h3{
+    margin-right: 5px;
+    text-align: right;
+}
+
+
+/* Total Score Card */
+
+#totalScore{
+    flex: 1;
+    overflow: hidden;
+}
+
+#totalScore .cardContent{
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#totalScore .cardContent::-webkit-scrollbar {
+    display: none;
+}
+
+/* Last Game Card */
+
+#lastGame{
+    flex: 2;
+}
+
+#lastGame .cardContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.bestPlayers {
+    width: 100%;
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+}
+
+.summaryLeaderboardRow {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.leaderboardPlayerContainer {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.leaderboardPlayerInfo {
+    height: 100%;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.leaderboardPlayerInfo h3 {
+    color: var(--white);
+
+    text-align: center;
+    width: 100%;
+}
+
+.scoreboardPlayerEntry {
+    margin: 10px;
+    flex: 1;
+
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+
+    background-color: var(--card-background);
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    flex-direction: row;
+}
+
+#scoreboardPlayer1 {
+    box-shadow: inset 0 -30px 30px -31px var(--player-one);
+    border-bottom-color: var(--player-one);
+}
+
+#scoreboardPlayer2 {
+    box-shadow: inset 0 -30px 30px -31px var(--player-two);
+    border-bottom-color: var(--player-two);
+}
+
+#scoreboardPlayer3 {
+    box-shadow: inset 0 -30px 30px -31px var(--player-three);
+    border-bottom-color: var(--player-three);
+}
+
+#scoreboardPlayer4 {
+    box-shadow: inset 0 -30px 30px -31px var(--player-four);
+    border-bottom-color: var(--player-four);
+}
+
+.scoreboardPictureContainer {
+    height: 100%;
+    flex: 1;
+
+    display: grid;
+    place-items: center;
+}
+
+.scoreboardPicture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+
+    background: url("svg/user-solid.svg");
+    background-size: cover;
+}
+
+.scoreboardPlayerName {
+    margin: 3px;
+    flex: 2;
+}
+
+.scoreboardPlayerName h3 {
+    margin-top: 5px;
+    width: 100%;
+    color: var(--white);
+    text-align: center;
+}
+
+
+/* Game Diagram */
+
+.gameDiagram {
+    width: 100%;
+    flex: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.gameSummaryDiagram {
+    height: 80%;
+}
+
+
+
+/* New Game Card */
+
+#newGame{
+    flex: 1;
+    overflow: hidden;
+}
+
+#newGame .cardContent {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#GameTypeInfo{
+    width: 100%;
+    color: var(--white);
+    text-align: center;
+}
+
+.gameModeButtonContainer{
+    height: 4rem;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.gameModeButton {
+    cursor: pointer;
+
+    height: 3rem;
+    width: 50px;
+
+    background-color: var(--card-background);
+    backdrop-filter: blur(2px);
+
+    border-radius: 10px;
+
+    border-bottom-color: var(--white);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    box-shadow: inset 0 -20px 20px -21px var(--white);
+
+    transition: box-shadow 0.5s, border-bottom-color 0.5s;
+
+    display: grid;
+    place-items: center;
+}
+
+.gameModeButton h3{
+    user-select: none;
+    text-align: center;
+    color: white;
+}
+
+.gameTypeHalfAlignment {
+    width: 100%;
+    display: flex;
+}
+
+.gameTypeHalfAlignment .gameModeButtonContainer{
+    flex: 1;
+    height: 5rem;
+}
+
+.gameTypeButton {
+    cursor: pointer;
+
+    height: 5rem;
+    width: 100px;
+
+    background-color: var(--card-background);
+    backdrop-filter: blur(2px);
+
+    border-radius: 10px;
+
+    border-bottom-color: var(--white);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    box-shadow: inset 0 -20px 20px -21px var(--white);
+
+    transition: box-shadow 0.5s, border-bottom-color 0.5s;
+
+    display: grid;
+    place-items: center;
+}
+
+.gameTypeButton h3{
+    user-select: none;
+    text-align: center;
+    color: var(--white);
+}
+
+.gameStartButtonAlignment {
+    width: 100%;
+    flex: 1;
+
+    display: grid;
+    place-items: center;
+}
+
+.startGameButton {
+    cursor: pointer;
+
+    border-radius: 10px;
+
+    background-color: var(--card-background);
+
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: var(--light-blue);
+
+    transition: box-shadow 0.5s, border-bottom-color 0.5s;
+
+    box-shadow: inset 0 -20px 20px -21px var(--light-blue);
+}
+
+.startGameButton h3{
+    user-select: none;
+    color: var(--white);
+    text-align: center;
+    letter-spacing: 0.5rem;
+    padding: 10px;
+}
+
+
+/* Aim Card */
+
+#aim{
+    flex: 1;
+}
+
+#aim .cardContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.aimVisualContainer {
+    flex: 3;
+    width: 100%;
+
+    display: grid;
+    place-items: center;
+}
+
+.dartboardVisual {
+    width: 90%;
+    height: 90%;
+}
+
+.aimSelectedPlayerContainer {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.aimSelectedPlayerContainer .selectorArrow {
+    flex: 1;
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.selectorArrow svg {
+    width: 3vw;
+    height: 3vw;
+}
+
+.selectorArrow path {
+    fill: var(--white);
+}
+
+.selectedPlayerNameContainer {
+    flex: 3;
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.selectedPlayerNameContainer h3 {
+    color: var(--white);
+    width: 100%;
+    text-align: center;
+}
+
+
+
+/* Include Players Card */
+
+#includePlayers {
+    flex: 1;
+    overflow: hidden;
+}
+
+#includePlayers .cardContent {
+    flex: 1;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow: hidden;
+}
+
+.playerScrollContainer {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.playerScrollContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.playerScrollItem {
+    cursor: pointer;
+
+    width: 100%;
+    height: 6rem;
+    margin-bottom: 5px;
+    display: grid;
+    place-items: center;
+}
+
+.playerSelectItem {
+    width: 90%;
+    height: 90%;
+
+    background-color: var(--card-background);
+    backdrop-filter: blur(10px);
+
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--white);
+    box-shadow: inset 0 -30px 30px -31px var(--white);
+
+    display: flex;
+
+    transition: box-shadow 0.5s, border-bottom-color 0.5s;
+}
+
+.playerSelectPicContainer {
+    flex: 1;
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+}
+
+.playerSelectPic {
+    height: 50px;
+    border-radius: 50%;
+}
+
+.playerSelectNameContainer {
+    flex: 3;
+    height: 100%;
+}
+
+.playerSelectNameContainer h3 {
+    user-select: none;
+    margin-top: 1rem;
+    color: var(--white);
+    width: 100%;
+}

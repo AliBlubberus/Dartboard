@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Adrian",
+        "gamesPlayed": 41,
+        "totalScore": 1230,
+        "averageScore": 30
+    },
+    {
+        "name": "Philipp",
+        "gamesPlayed": 30,
+        "totalScore": 1800,
+        "averageScore": 60
+    },
+    {
+        "name": "Vaddurn",
+        "gamesPlayed": 70,
+        "totalScore": 3850,
+        "averageScore": 55
+    },
+    {
+        "name": "Johanna",
+        "gamesPlayed": 28,
+        "totalScore": 700,
+        "averageScore": 25
+    }
+]

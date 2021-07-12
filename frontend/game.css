@@ -1,0 +1,540 @@
+/* imports */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Colors */
+    --dark-blue: #10555B;
+    --blue: #136E73;
+    --light-blue: #79BFB2;
+    --light-red: #F9A88E;
+    --red: #E9665D;
+
+    --dark-gray: #293C42;
+    --gray: #858D8F;
+    --white: #ECECEE;
+    --blue-black: #020B26;
+    --black: #090910;
+
+    --sidebar-background: #000010aa;
+    --card-background: #00001050;
+    --card-background-strong: #000010cc;
+    --card-background-light: #ECECEE50;
+
+    --dark-grey-transparent: #293C42aa;
+    --blue-black-transparent: #020B26aa;
+    --light-red-transparent: #F9A88Eaa;
+    --red-transparent: #E9665Daa;
+    --light-blue-transparent: #79BFB2aa;
+    --blue-transparent: #136E73aa;
+
+    --player-one: #FF4631;
+    --player-two: #FF7F2E;
+    --player-three: #FEBA2B;
+    --player-four: #1BB778;
+    --player-five: #2F5DFB;
+    --player-six: #1A5173;
+    --player-seven: #3CA661;
+    --player-eight: #F2C230;
+    --player-nine: #F28A80;
+    --player-ten: #BF3030;
+
+    /* Font Settings */
+    font-family: 'Varela Round', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--black);
+    background-image: url(svg/bullseye-solid.svg);
+    background-size: cover;
+
+    border-radius: 100px;
+}
+
+/* General Font Settings */
+
+h2{
+    color: var(--white);
+    font-size: 30px;
+    letter-spacing: 0.5rem;
+}
+
+h3{
+    color: var(--light-blue);
+    font-size: 16px;
+    letter-spacing: 0.2rem;
+}
+
+/* Window Top Bar */
+
+.windowTopBar {
+    z-index: 10;
+    position: fixed;
+    width: 100vw;
+    height: 25px;
+
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.topBarButton {
+    height: 100%;
+    width: 50px;
+
+    display: grid;
+    place-items: center;
+}
+
+.topBarButton svg {
+    height: 75%;
+    fill: var(--dark-grey-transparent);
+    transition: fill 0.5s;
+}
+
+.topBarButton:hover svg {
+    fill: var(--white);
+}
+
+#closeButton:hover svg {
+    fill: var(--red);
+}
+
+.dragArea {
+    height: 100%;
+    width: 100%;
+}
+
+/* sidebar */
+
+.sidebar {
+    position: fixed;
+    justify-self: left;
+    height: 100vh;
+    width: 600px;
+
+    background-color: var(--sidebar-background);
+    box-shadow: var(--black) 0 0 10px;
+
+    backdrop-filter: blur(5px);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.gameSidebarHalf {
+    flex: 1;
+    width: 100%;
+
+    overflow: hidden;
+}
+
+/* Sidebar Upper Half */
+
+#playerScrollContainer {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+#playerScrollContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.playerScrollItem {
+    margin: 10px;
+    width: 90%;
+    height: 100px;
+
+    background-color: var(--card-background);
+
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--white);
+    box-shadow: inset 0 -30px 30px -31px var(--white);
+
+    display: flex;
+    flex-direction: row;
+
+    transition: box-shadow 0.5s, border-bottom-color 0.5s;
+}
+
+.playerProfilePicture {
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+    background: url("svg/user-solid.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.playerNameContainer {
+    flex: 3;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+.playerNameContainer h3{
+    color: var(--white);
+    font-size: 2rem;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.playerGameInfoContainer {
+    flex: 2;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.playerGameInfoContainer h3 {
+    margin-top: 10px;
+    width: 100%;
+
+    color: var(--white);
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.playerScoreContainer {
+    flex: 1;
+    width: 100%;
+
+    display: grid;
+    place-items: center;
+}
+
+.playerGameInfoContainer h1 {
+    color: var(--white);
+    font-size: 4rem;
+}
+
+
+/* Sidebar Bottom Half */
+
+#sidebarBottomHalf {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebarPlayerNameContainer {
+    width: 100%;
+    flex: 1;
+
+    display: grid;
+    place-items: center;
+}
+
+.sidebarPlayerNameContainer h1 {
+    color: var(--white);
+    letter-spacing: 2px;
+    font-size: 4.5vh;
+}
+
+.sidebarPlayerNameContainer h2{
+    font-size: 2vh;
+}
+
+.sidebarScoreContainer {
+    width: 100%;
+    flex: 2;
+
+    display: grid;
+    place-items: center;
+}
+
+.sidebarScoreContainer h1 {
+    color: var(--white);
+    letter-spacing: 4px;
+    font-size: 8vh;
+}
+
+.correctionButton {
+    border-radius: 20px;
+
+    width: 150px;
+    height: 50px;
+
+    background-color: var(--card-background);
+
+    border-bottom: 5px solid;
+    border-bottom-color: var(--white);
+
+    box-shadow: inset 0 -10px 10px -11px var(--white);
+
+    transition: box-shadow 0.5s;
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+}
+
+.correctionButton:hover {
+    box-shadow: inset 0 -20px 20px -21px var(--white);
+}
+
+.correctionButton svg {
+    fill: var(--white);
+    height: 80%;
+}
+
+.sidebarScorePerDartContainer {
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+    
+}
+
+.sidebarSingleDartScoreField {
+    width: 100px;
+    height: 5rem;
+
+    background-color: var(--card-background);
+
+    border-radius: 20px;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--white);
+
+    box-shadow: inset 0 -20px 20px -21px var(--white);
+
+    display: grid;
+    place-items: center;
+}
+
+.sidebarSingleDartScoreField h1 {
+    color: var(--white);
+    letter-spacing: 5px;
+    font-size: 2rem;
+}
+
+
+
+/* Dartboard */
+
+.dartboardContainer {
+    position: fixed;
+    height: 100vh;
+    width: calc(100vw - 600px);
+    right: 0;
+
+    display: grid;
+    place-items: center;
+}
+
+.dartboard {
+    width: 100vh;
+    height: 100vh;
+
+    background-color: var(--card-background-strong);
+    border-radius: 50%;
+
+    box-shadow: var(--card-background-strong) 0 0 20px 10px;
+
+    display: grid;
+    place-items: center;
+}
+
+.dartboardSVG {
+    position: absolute;
+    height: 80vh;
+    width: 80vh;
+}
+
+.dartboardTile {
+    transition: fill .5s, transform .5s;
+    cursor: pointer;
+}
+
+.dartboardTile:hover {
+    fill: var(--white);
+}
+
+.dartboardNumbers {
+    position: absolute;
+    height: 98vh;
+    width: 98vh;
+    z-index: -1;
+}
+
+.roundButton {
+    cursor: pointer;
+    z-index: -1;
+    position: absolute;
+
+    width: 30%;
+    height: 30%;
+
+    display: grid;
+    place-items: center;
+}
+
+.roundButtonSVG:hover {
+    fill: var(--card-background);
+}
+
+.roundButtonSVG {
+    width: 100%;
+    height: 100%;
+    fill: var(--card-background-strong);
+
+    transition: fill 0.5s;
+}
+
+.roundButtonIcon {
+    z-index: -2;
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    fill: var(--white);
+    bottom: 20%;
+}
+
+#rightRoundButton {
+    bottom: 0;
+    right: 0;
+}
+
+#leftRoundButton {
+    bottom: 0;
+    left: 0;
+}
+
+#leftRoundButton .roundButtonIcon {
+    left: 10%;
+}
+
+#rightRoundButton .roundButtonIcon {
+    right: 10%;
+}
+
+
+/* Win Popup */
+
+.winPopupContainer {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+}
+
+.winPopup {
+    z-index: 20;
+    aspect-ratio: 2 / 3;
+    height: clamp(300px, 80vh, 1000px);
+
+    background-color: var(--card-background);
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+    border: 3px solid var(--light-blue);
+    box-shadow: var(--blue) 0 0 20px inset, var(--blue-black) 3px 3px 5px, var(--blue) 0 0 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.ggContainer {
+    width: 100%;
+    flex: 2;
+
+    display: grid;
+    place-items: center;
+}
+
+.ggContainer h1 {
+    color: var(--white);
+    text-shadow:    2px 2px var(--light-blue),
+                    4px 4px var(--blue),
+                    6px 6px var(--dark-blue),
+                    8px 8px var(--blue-black);
+    font-size: 15rem;
+}
+
+.winningPlayerNameContainer {
+    width: 100%;
+    flex: 3;
+    display: grid;
+    place-items: center;
+}
+
+.winningPlayerNameContainer h1 {
+    color: var(--blue);
+    font-size: 3rem;
+}
+
+.topPlayerStatsContainer {
+    width: 100%;
+    flex: 3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.topPlayerStatsContainer h2 {
+    color: var(--gray);
+}
+
+.endGameButtonContainer {
+    width: 100%;
+    flex: 1;
+
+    display: grid;
+    place-items: center;
+}
+
+.endGameButton {
+    cursor: pointer;
+
+    width: 80%;
+    height: 80%;
+
+    background-color: var(--card-background-strong);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    border-bottom: 3px solid var(--white);
+    box-shadow: inset 0 -20px 20px -21px var(--white), 0 0 20px var(--blue-black);
+
+    display: grid;
+    place-items: center;
+    
+    transition: box-shadow 0.2s;
+}
+
+.endGameButton:hover {
+    box-shadow: inset 0 -40px 40px -41px var(--white), 0 0 20px var(--blue-black);
+}
+
+.endGameButton h1 {
+    color: var(--white);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    user-select: none;
+}
