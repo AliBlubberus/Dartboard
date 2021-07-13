@@ -1,5 +1,3 @@
-// do it wurks?
-
 const { ipcRenderer, Debugger } = require("electron");
 const { stat } = require("original-fs");
 
@@ -64,7 +62,7 @@ function endTurn() {
         if (currentPlayerObject.darts.length == 3) {
             if (currentRoundObject.length < playerData.length - 1) {
                 console.log("Ending Turn (Next Player)");
-                playerData[currentPlayer].remainingScore -= generateSum();
+                playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
                 currentRoundObject[currentRoundObject.length] = currentPlayerObject;
                 currentPlayerObject = {};
                 currentPlayer++;
@@ -72,7 +70,7 @@ function endTurn() {
             }
             else {
                 console.log("Ending Turn (New Round)");
-                playerData[currentPlayer].remainingScore -= generateSum();
+                playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
                 currentRoundObject[currentRoundObject.length] = currentPlayerObject;
                 currentPlayerObject = {};
                 gameRecording[gameRecording.length] = currentRoundObject;
@@ -81,9 +79,9 @@ function endTurn() {
                 initializeTurn();
             }
         }
-        else if (generateSum() == playerData[currentPlayer].remainingScore) {
+        else if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore) {
             console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
-            playerData[currentPlayer].remainingScore -= generateSum();
+            playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
             currentRoundObject[currentRoundObject.length] = currentPlayerObject;
 
             // win logic //
@@ -94,12 +92,38 @@ function endTurn() {
     updateUI();
 }
 
-function generateSum() {
+function generateCurrentDartsSum() {
     let sum = 0;
     currentPlayerObject.darts.forEach(element => {
         sum += element.score;
     });
     return sum;
+}
+
+function getAverageScore(player) {
+    if (gameRecording.length > 0) {
+        let totalScore = settingsObj.gameLength - playerData[player].remainingScore;
+
+        let averageScore = 0;
+        if (currentRoundObject.length >= player) averageScore = totalScore / (gameRecording.length + 1);
+        else averageScore = totalScore / gameRecording.length;
+
+        return Math.round((averageScore + Number.EPSILON) * 100) / 100;
+    }
+    else console.log("getAverageScore() can only be called after the first round!");
+}
+
+function getTotalDarts(player) {
+    if (gameRecording.length > 0) {
+        let darts = 0;
+        let dartsCurrentRound = 0;
+
+        darts = gameRecording.length * 3;
+        if (currentRoundObject.length > player) dartsCurrentRound = currentRoundObject[player].darts.length;
+
+        return darts + dartsCurrentRound;
+    }
+    else console.log("getTotalDarts() gan only be called after the first round!");
 }
 
 function correctLastDart() {
@@ -248,11 +272,11 @@ function instantiateWinPopup(player) {
         popup.appendChild(statsContainer);
 
         let averageStat = document.createElement("h2");
-        averageStat.textContent = "Average Score: X";
+        averageStat.textContent = "Average Score: " + getAverageScore(winner);
         statsContainer.appendChild(averageStat);
 
         let dartsStat = document.createElement("h2");
-        dartsStat.textContent = "Darts: X";
+        dartsStat.textContent = "Darts: " + getTotalDarts(winner);
         statsContainer.appendChild(dartsStat);
 
         let endGameButtonContainer = document.createElement("div");
