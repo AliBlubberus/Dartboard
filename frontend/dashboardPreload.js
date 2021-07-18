@@ -1,4 +1,4 @@
-const { ipcRenderer, Debugger } = require("electron");
+const { ipcRenderer, Debugger, ipcMain } = require("electron");
 
 const playerData = ipcRenderer.sendSync("loadPlayerData");
 
@@ -115,7 +115,6 @@ function exportSelectedPlayers() {
 
 // new game logic //
 
-
 // start game button //
 
 const startGameButton = document.getElementById("startGameButton");
@@ -130,7 +129,7 @@ function startGame() {
         
         settingsObject.selectedPlayers = exportSelectedPlayers();
 
-        console.log(settingsObject);
+        ipcRenderer.sendSync("startNewGame", settingsObject);
     }
 }
 
@@ -260,5 +259,3 @@ function updateGameEndingButtons(index) {
 }
 
 updateGameEndingButtons();
-
-
