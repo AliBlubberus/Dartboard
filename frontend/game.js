@@ -3,7 +3,7 @@ const { stat } = require("original-fs");
 
 const playerContainer = document.getElementById("playerScrollContainer");
 
-const rawPlayerData = ipcRenderer.sendSync("loadPlayerData");
+//const rawPlayerData = ipcRenderer.sendSync("loadPlayerData");
 var playerData = [];
 var playerListings = [];
 
@@ -23,20 +23,19 @@ var gameEndPopupObject = null;
 
 var winner = null;
 
-// TODO: Delete this and replace it with actual logic
-settingsObj = {};
-settingsObj.gameLength = 401;
+ipcRenderer.on("initializeGame", (event, arg) => {
+    console.log(arg);
+    initializeGame(arg.playerData, arg.settings);
+});
 
-initializeGame(settingsObj);
-
-function initializeGame() {
+function initializeGame(players, settings) {
     
-    for(let player = 0; player < rawPlayerData.length; player++) {
+    for(let player = 0; player < players.length; player++) {
     // Setup player data //
-        playerListings[player] = createPlayerListing(rawPlayerData[player], settingsObj);
+        playerListings[player] = createPlayerListing(players[player], settings);
         playerData[player] = {};
-        playerData[player].name = rawPlayerData[player].name;
-        playerData[player].remainingScore = settingsObj.gameLength;
+        playerData[player].name = players[player].name;
+        playerData[player].remainingScore = settings.gameLength;
     }
 
     initializeTurn();

@@ -15,12 +15,33 @@ app.whenReady().then(() => {
         }
     });
 
-    //load a webpage
-    mainWindow.loadFile("frontend/game.htm");
+    //load dashboard
+    mainWindow.loadFile("frontend/index.htm");
     //mainWindow.setMenu(null);
 })
 
 ipcMain.on("loadPlayerData", (event, arg) => {
-    var file = fs.readFileSync("./json/players.json");
+    let file = fs.readFileSync("./json/players.json");
     event.returnValue = JSON.parse(file);
 });
+
+ipcMain.on("startNewGame", (event, arg) => {
+    let isolatedPlayerData = isolatePlayerData(arg.selectedPlayers);
+    let gameSettings = {
+        "length": arg.gameLength,
+        "gameEntry": arg.gameEntry,
+        "gameEnding": arg.gameEnding
+    };
+    mainWindow.loadFile("frontend/game.htm");
+    mainWindow.webContents.once('did-finish-load', () => {mainWindow.webContents.send("initializeGame", {"playerData": isolatedPlayerData, "settings": gameSettings})});
+});
+
+function isolatePlayerData(elements) {
+    let isolatedData = [];
+    let data = JSON.parse(fs.readFileSync("./json/players.json"));
+
+    elements.forEach(index => {
+        isolatedData[isolatedData.length] = data[index];
+    });
+    return isolatedData;
+}
