@@ -19,12 +19,15 @@ var gameRecording = [];
 var currentRoundObject = [];
 var currentPlayerObject = {};
 
+var settingsObj;
+
 var gameEndPopupObject = null;
 
 var winner = null;
 
 ipcRenderer.on("initializeGame", (event, arg) => {
     console.log(arg);
+    settingsObj = arg.settings;
     initializeGame(arg.playerData, arg.settings);
 });
 
@@ -58,6 +61,28 @@ function addDart(position) {
 
 function endTurn() {
     if (currentPlayerObject.darts) {
+        if (generateCurrentDartsSum() > playerData[currentPlayer].remainingScore) {
+            console.log("Ending Turn (Overshot).");
+            currentPlayerObject = [
+                {"notation": "OVER", "score": 0},
+                {"notation": "OVER", "score": 0},
+                {"notation": "OVER", "score": 0}
+            ];
+            if (currentRoundObject.length < playerData.length - 1) {
+                currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                currentPlayerObject = {};
+                currentPlayer++;
+                initializeTurn();
+            }
+            else {
+                currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                currentPlayerObject = {};
+                gameRecording[gameRecording.length] = currentRoundObject;
+                currentRoundObject = [];
+                currentPlayer = 0;
+                initializeTurn();
+            }
+        }
         if (currentPlayerObject.darts.length == 3) {
             if (currentRoundObject.length < playerData.length - 1) {
                 console.log("Ending Turn (Next Player)");
@@ -79,14 +104,14 @@ function endTurn() {
             }
         }
         else if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore) {
-            console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
-            playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
-            currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
+                playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
+                currentRoundObject[currentRoundObject.length] = currentPlayerObject;
 
-            // win logic //
-            winner = currentPlayer;
-            instantiateWinPopup(playerData[winner]);
-        }
+                // win logic //
+                winner = currentPlayer;
+                instantiateWinPopup(playerData[winner]);
+            }
     }
     updateUI();
 }

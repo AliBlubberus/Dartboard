@@ -2,6 +2,7 @@ const {app, BrowserWindow, ipcMain} = require("electron");
 const fs = require("fs");
 
 var mainWindow;
+var gameWindow;
 
 app.whenReady().then(() => {
 
@@ -25,6 +26,10 @@ ipcMain.on("loadPlayerData", (event, arg) => {
     event.returnValue = JSON.parse(file);
 });
 
+ipcMain.on("gameRunning", (event, arg) => {
+    event.returnValue = gameWindow != null;
+})
+
 ipcMain.on("startNewGame", (event, arg) => {
     let isolatedPlayerData = isolatePlayerData(arg.selectedPlayers);
     let gameSettings = {
@@ -32,7 +37,7 @@ ipcMain.on("startNewGame", (event, arg) => {
         "gameEntry": arg.gameEntry,
         "gameEnding": arg.gameEnding
     };
-    var gameWindow = new BrowserWindow({
+    gameWindow = new BrowserWindow({
         width: 1600,
         height: 1000,
         webPreferences: {
@@ -42,6 +47,8 @@ ipcMain.on("startNewGame", (event, arg) => {
     });
     gameWindow.loadFile("frontend/game.htm");
     gameWindow.webContents.on('did-finish-load', () => {gameWindow.webContents.send("initializeGame", {"playerData": isolatedPlayerData, "settings": gameSettings})});
+    mainWindow.webContents.executeJavaScript("gameRunning = true;");
+    gameWindow.on("close", function() {mainWindow.webContents.executeJavaScript("gameRunning = false;")});
 });
 
 function isolatePlayerData(elements) {

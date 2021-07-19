@@ -6,7 +6,7 @@ const playerSelectList = document.getElementById("playerSelectList");
 const totalScoreListContainer = document.getElementById("totalScoreList");
 const averageScoreListContainer = document.getElementById("averageScoreList");
 
-
+var gameRunning = false;
 
 playerData.forEach(element => {
     generatePlayerListing(element);
@@ -121,7 +121,7 @@ const startGameButton = document.getElementById("startGameButton");
 var startGameButtonInteractable = false;
 
 function startGame() {
-    if (startGameButtonInteractable) {
+    if (startGameButtonInteractable && !gameRunning) {
         settingsObject = {};
         settingsObject.gameLength = gameLengthIntervals[gameLength];
         settingsObject.gameEntry = gameEntry;
@@ -129,7 +129,7 @@ function startGame() {
         
         settingsObject.selectedPlayers = exportSelectedPlayers();
 
-        ipcRenderer.sendSync("startNewGame", settingsObject);
+        ipcRenderer.send("startNewGame", settingsObject);
     }
 }
 
