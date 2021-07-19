@@ -27,6 +27,10 @@ ipcMain.on("loadPlayerData", (event, arg) => {
     event.returnValue = rawPlayerData;
 });
 
+ipcMain.on("loadLatestGame", (event, arg) => {
+    event.returnValue = JSON.parse(fs.readFileSync("./json/latestGame.json"));
+});
+
 ipcMain.on("gameRunning", (event, arg) => {
     event.returnValue = gameWindow != null;
 })
@@ -62,6 +66,7 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
     rawPlayerData[getGlobalPlayerIndexByName(arg.winner.data.name)].gamesWon++;
     gameWindow.close();
     overrideLocalPlayerData();
+    fs.writeFileSync("./json/latestGame.json", JSON.stringify(arg));
 });
 
 function getGlobalPlayerIndexByName(name) {

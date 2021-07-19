@@ -1,5 +1,12 @@
 const { ipcRenderer, Debugger, ipcMain } = require("electron");
 
+const diagramSVG = document.getElementById("gameSummaryDiagram");
+const ns = "http://www.w3.org/2000/svg";
+
+const latestGame = ipcRenderer.sendSync("loadLatestGame");
+
+window.onload = generateGraph();
+
 const playerData = ipcRenderer.sendSync("loadPlayerData");
 
 const playerSelectList = document.getElementById("playerSelectList");
@@ -83,7 +90,7 @@ function generateAverageScoreListing(object) {
     entry.appendChild(scoreContainer);
 
     let scoreText = document.createElement("h3");
-    scoreText.textContent = object.averageScore;
+    scoreText.textContent = roundNumber(object.averageScorePerGame);
     scoreContainer.appendChild(scoreText);
 }
 
@@ -259,3 +266,67 @@ function updateGameEndingButtons(index) {
 }
 
 updateGameEndingButtons();
+
+// Game Summary Diagram
+
+function generateGraph() {
+    console.log("Generating Graph...");
+
+    /*
+    let layer1 = document.createElementNS(ns, "polyline");
+    layer1.setAttribute("class", "diagramLayer1");
+    layer1.setAttribute("style", "stroke:#FF4631;stroke-width:2");
+    layer1.setAttribute("points", generatePointDefinition(0));
+    */
+    let newLayers = [];
+    for (let player = 0; player < clamp(latestGame.playerData.length, 0, 4); player++) {
+        newLayers[player] = document.createElementNS(ns, "polyline");
+
+        newLayers[player].setAttribute("class", "diagramLayer" + (player + 1));
+        newLayers[player].setAttribute("style", "stroke-width:2");
+        newLayers[player].setAttribute("points", generatePointDefinition(player));
+
+        diagramSVG.appendChild(newLayers[player]);
+    }
+
+    //diagramSVG.appendChild(layer1);
+}
+
+function generatePointDefinition(layer) {
+    let string = "";
+    let yValues = generateProcedualRecordingArray(layer);
+
+    for (let i = 0 ; i <= latestGame.recording.length ; i++) {
+        let x = 500 / latestGame.recording.length * i;
+        let y = 200 - (yValues[i] * 200 / latestGame.gameSettings.gameLength);
+
+        string += " " + x.toString() + "," + roundNumber(y).toString();
+    }
+
+    return string;
+}
+
+function generateProcedualRecordingArray(player) {
+    let array = [];
+    array[0] = latestGame.gameSettings.gameLength;
+    for (let i = 1; i <= latestGame.recording.length; i++) {
+        array[i] = array[i - 1] - generateDartSum(latestGame.recording[i - 1][player]);
+    }
+    return array;
+}
+
+function generateDartSum(obj) {
+    let score = 0;
+    obj.darts.forEach(element => {
+        score += element.score;
+    });
+    return score;
+}
+
+function roundNumber(num) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
+}
+
+function clamp(val, min, max) {
+    return Math.min(Math.max(val, min), max);
+}

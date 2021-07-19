@@ -485,6 +485,21 @@ h3{
     aspect-ratio: 5 / 2;
 }
 
+.diagramLayer1 {
+    stroke: var(--player-one);
+}
+
+.diagramLayer2 {
+    stroke: var(--player-two);
+}
+
+.diagramLayer3 {
+    stroke: var(--player-three);
+}
+
+.diagramLayer4 {
+    stroke: var(--player-four);
+}
 
 
 /* New Game Card */
