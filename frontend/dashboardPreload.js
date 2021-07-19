@@ -128,7 +128,7 @@ const startGameButton = document.getElementById("startGameButton");
 var startGameButtonInteractable = false;
 
 function startGame() {
-    if (startGameButtonInteractable && !gameRunning) {
+    if (startGameButtonInteractable && !gameRunning && exportSelectedPlayers().length > 0) {
         settingsObject = {};
         settingsObject.gameLength = gameLengthIntervals[gameLength];
         settingsObject.gameEntry = gameEntry;
@@ -329,4 +329,31 @@ function roundNumber(num) {
 
 function clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
+}
+
+
+function getTop4() {
+    let top4 = [];
+
+    for (let i = 0; i < 4; i++) {
+        let match = {"remainingScore": latestGame.gameSettings.gameLength + 1};
+        latestGame.playerData.forEach((player) => {
+            if (player.remainingScore < match.remainingScore && !matchAgainstBlacklist(player, top4)) {
+                match = player;
+            }
+        });
+        top4[top4.length] = match;
+    }
+
+    return top4;
+}
+
+function matchAgainstBlacklist(item, list) {
+    let out = false;
+
+    list.forEach((element) => {
+        if (element == item) out = true;
+    });
+
+    return out;
 }
