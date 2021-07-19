@@ -83,6 +83,16 @@ function endTurn() {
                 initializeTurn();
             }
         }
+        if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore) {
+            console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
+            playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
+            currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+
+            // win logic //
+            winner = currentPlayer;
+            instantiateWinPopup(playerData[winner]);
+            return;
+        }
         if (currentPlayerObject.darts.length == 3) {
             if (currentRoundObject.length < playerData.length - 1) {
                 console.log("Ending Turn (Next Player)");
@@ -103,15 +113,6 @@ function endTurn() {
                 initializeTurn();
             }
         }
-        else if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore) {
-                console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
-                playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
-                currentRoundObject[currentRoundObject.length] = currentPlayerObject;
-
-                // win logic //
-                winner = currentPlayer;
-                instantiateWinPopup(playerData[winner]);
-            }
     }
     updateUI();
 }
@@ -309,6 +310,7 @@ function instantiateWinPopup(player) {
 
         let endGameButton = document.createElement("div");
         endGameButton.setAttribute("class", "endGameButton");
+        endGameButton.setAttribute("onclick", "finishGame()");
         endGameButtonContainer.appendChild(endGameButton);
 
         let endGameButtonText = document.createElement("h1");
@@ -317,6 +319,19 @@ function instantiateWinPopup(player) {
     }
 }
 
+function finishGame() {
+    let object = {};
+    object.playerData = playerData;
+    for (let i = 0; i < playerData.length; i++) {
+        playerData[i].averageScore = getAverageScore(i);
+        playerData[i].totalDarts = getTotalDarts(i);
+    }
+    object.winner = {"index": winner, "data": playerData[winner]};
+    object.recording = gameRecording;
+    object.gameSettings = settingsObj;
+
+    ipcRenderer.send("handleFinishedGame", object);
+}
 
 // ======= TEST FUNCTIONS ======= //
 function mutateScore(amount) {

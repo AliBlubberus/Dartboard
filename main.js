@@ -1,8 +1,10 @@
-const {app, BrowserWindow, ipcMain} = require("electron");
+const {app, BrowserWindow, ipcMain, ipcRenderer} = require("electron");
 const fs = require("fs");
 
 var mainWindow;
 var gameWindow;
+
+var rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
 
 app.whenReady().then(() => {
 
@@ -22,8 +24,7 @@ app.whenReady().then(() => {
 });
 
 ipcMain.on("loadPlayerData", (event, arg) => {
-    let file = fs.readFileSync("./json/players.json");
-    event.returnValue = JSON.parse(file);
+    event.returnValue = rawPlayerData;
 });
 
 ipcMain.on("gameRunning", (event, arg) => {
@@ -51,6 +52,25 @@ ipcMain.on("startNewGame", (event, arg) => {
     gameWindow.on("close", function() {mainWindow.webContents.executeJavaScript("gameRunning = false;")});
 });
 
+ipcMain.on("handleFinishedGame", (event, arg) => {
+    arg.playerData.forEach((element) => {
+        let index = getGlobalPlayerIndexByName(element.name);
+        rawPlayerData[index].gamesPlayed++;
+        rawPlayerData[index].totalScore += (arg.gameSettings.gameLength - element.remainingScore);
+        rawPlayerData[index].averageScorePerGame = (rawPlayerData[index].totalScore / rawPlayerData[index].gamesPlayed);
+    });
+    rawPlayerData[getGlobalPlayerIndexByName(arg.winner.data.name)].gamesWon++;
+    gameWindow.close();
+    overrideLocalPlayerData();
+});
+
+function getGlobalPlayerIndexByName(name) {
+    for (let i = 0; i < rawPlayerData.length; i++) {
+        if (rawPlayerData[i].name == name) return i;
+    }
+    console.log("No player matching '" + name + "'.");
+}
+
 function isolatePlayerData(elements) {
     let isolatedData = [];
     let data = JSON.parse(fs.readFileSync("./json/players.json"));
@@ -59,4 +79,13 @@ function isolatePlayerData(elements) {
         isolatedData[isolatedData.length] = data[index];
     });
     return isolatedData;
+}
+
+
+//THESE FUNCTIONS OVERRIDE FILES
+//USE WITH CAUTION
+
+function overrideLocalPlayerData() {
+    let string = JSON.stringify(rawPlayerData);
+    fs.writeFileSync("./json/players.json", string);
 }
