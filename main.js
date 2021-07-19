@@ -18,7 +18,7 @@ app.whenReady().then(() => {
     //load dashboard
     mainWindow.loadFile("frontend/index.htm");
     //mainWindow.setMenu(null);
-})
+});
 
 ipcMain.on("loadPlayerData", (event, arg) => {
     let file = fs.readFileSync("./json/players.json");
@@ -28,12 +28,20 @@ ipcMain.on("loadPlayerData", (event, arg) => {
 ipcMain.on("startNewGame", (event, arg) => {
     let isolatedPlayerData = isolatePlayerData(arg.selectedPlayers);
     let gameSettings = {
-        "length": arg.gameLength,
+        "gameLength": arg.gameLength,
         "gameEntry": arg.gameEntry,
         "gameEnding": arg.gameEnding
     };
-    mainWindow.loadFile("frontend/game.htm");
-    mainWindow.webContents.once('did-finish-load', () => {mainWindow.webContents.send("initializeGame", {"playerData": isolatedPlayerData, "settings": gameSettings})});
+    var gameWindow = new BrowserWindow({
+        width: 1600,
+        height: 1000,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+    gameWindow.loadFile("frontend/game.htm");
+    gameWindow.webContents.on('did-finish-load', () => {gameWindow.webContents.send("initializeGame", {"playerData": isolatedPlayerData, "settings": gameSettings})});
 });
 
 function isolatePlayerData(elements) {

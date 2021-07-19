@@ -29,7 +29,7 @@ ipcRenderer.on("initializeGame", (event, arg) => {
 });
 
 function initializeGame(players, settings) {
-    
+    console.log(players, settings);
     for(let player = 0; player < players.length; player++) {
     // Setup player data //
         playerListings[player] = createPlayerListing(players[player], settings);

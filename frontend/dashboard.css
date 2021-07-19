@@ -350,6 +350,12 @@ h3{
 
 #lastGame{
     flex: 2;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#lastGame::-webkit-scrollbar {
+    display: none;
 }
 
 #lastGame .cardContent{
@@ -476,6 +482,7 @@ h3{
 
 .gameSummaryDiagram {
     height: 80%;
+    aspect-ratio: 5 / 2;
 }
 
 
