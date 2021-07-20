@@ -5,7 +5,7 @@ const ns = "http://www.w3.org/2000/svg";
 
 const latestGame = ipcRenderer.sendSync("loadLatestGame");
 
-window.onload = generateGraph();
+window.onload = generateLastGameCard();
 
 const playerData = ipcRenderer.sendSync("loadPlayerData");
 
@@ -269,27 +269,37 @@ updateGameEndingButtons();
 
 // Game Summary Diagram
 
-function generateGraph() {
+function generateLastGameCard() {
     console.log("Generating Graph...");
+    let top4list = getTop4();
 
-    /*
-    let layer1 = document.createElementNS(ns, "polyline");
-    layer1.setAttribute("class", "diagramLayer1");
-    layer1.setAttribute("style", "stroke:#FF4631;stroke-width:2");
-    layer1.setAttribute("points", generatePointDefinition(0));
-    */
-    let newLayers = [];
-    for (let player = 0; player < clamp(latestGame.playerData.length, 0, 4); player++) {
-        newLayers[player] = document.createElementNS(ns, "polyline");
+    let players = [];
+    top4list.forEach((element) => {
+        players[players.length] = getLocalIndexByPlayerName(element.name, latestGame.playerData);
+    });
+    for (let i = 0; i < 4; i++) {
+        let newLayer = document.createElementNS(ns, "polyline");
 
-        newLayers[player].setAttribute("class", "diagramLayer" + (player + 1));
-        newLayers[player].setAttribute("style", "stroke-width:2");
-        newLayers[player].setAttribute("points", generatePointDefinition(player));
+        newLayer.setAttribute("class", "diagramLayer" + (i + 1));
+        newLayer.setAttribute("style", "stroke-width:2");
+        newLayer.setAttribute("points", generatePointDefinition(players[i]));
 
-        diagramSVG.appendChild(newLayers[player]);
+        diagramSVG.appendChild(newLayer);
+    };
+
+    let top4ScoreboardItems = [];
+    for (let j = 0; j < 4; j++) {
+        top4ScoreboardItems[j] = [];
+        top4ScoreboardItems[j][0] = document.getElementById("top" + (j + 1) + "Name");
+        top4ScoreboardItems[j][1] = document.getElementById("top" + (j + 1) + "Avrg");
+        top4ScoreboardItems[j][2] = document.getElementById("top" + (j + 1) + "Darts");
     }
 
-    //diagramSVG.appendChild(layer1);
+    for (let k = 0; k < 4; k++) {
+        top4ScoreboardItems[k][0].textContent = top4list[k].name;
+        top4ScoreboardItems[k][1].textContent = "Average Score: " + top4list[k].averageScore;
+        top4ScoreboardItems[k][2].textContent = "Darts: " + top4list[k].totalDarts;
+    }
 }
 
 function generatePointDefinition(layer) {
@@ -356,4 +366,92 @@ function matchAgainstBlacklist(item, list) {
     });
 
     return out;
+}
+
+function getLocalIndexByPlayerName(name, list) {
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].name == name) return i;
+    }
+    console.log("No such element found in list!");
+}
+
+// Aim Card Logic
+
+const aimCardPlayerName = document.getElementById("aimCardPlayerName");
+var currentAimCardPlayer = 0;
+
+refreshAimCard(currentAimCardPlayer);
+refreshAimCard(currentAimCardPlayer);
+aimCardPlayerName.textContent = latestGame.playerData[currentAimCardPlayer].name;
+
+function moveCurrentAimPlayer(dir) {
+    //Move
+    if (dir) currentAimCardPlayer++;
+    else currentAimCardPlayer--;
+
+    //Wrap Around
+    if (currentAimCardPlayer < 0) currentAimCardPlayer = latestGame.playerData.length - 1;
+    if (currentAimCardPlayer >= latestGame.playerData.length) currentAimCardPlayer = 0
+
+    //UI
+    refreshAimCard(currentAimCardPlayer);
+    aimCardPlayerName.textContent = latestGame.playerData[currentAimCardPlayer].name;
+}
+
+function refreshAimCard(player) {
+    let dartFields = [];
+
+    for (let r = 0; r < latestGame.recording.length; r++) {
+        for (let d = 0; d < 3; d++) {
+            let dart = latestGame.recording[r][player].darts[d];
+            addDartToArray(dart);
+        }
+    }
+
+    function addDartToArray(item) {
+        let existing = false;
+        dartFields.forEach((element) => {
+            if (element.notation == item.notation) existing = true;
+        });
+
+        if (!existing) {
+            dartFields[dartFields.length] = {
+                "notation": item.notation,
+                "amount": 1
+            }
+        }
+        else {
+            let index;
+            for (let i = 0; i < dartFields.length; i++) {
+                if (item.notation == dartFields[i].notation) index = i;
+            }
+            dartFields[index].amount++;
+        }
+    }
+
+    console.log(dartFields);
+
+    let normalizedDartFields = normalizeDartArray(dartFields);
+    normalizedDartFields.forEach((element) => {
+        document.getElementById(element.notation).style.opacity = element.amount;
+    });
+
+    function normalizeDartArray(array) {
+        let factor = 0;
+        array.forEach((element) => {
+            if (element.amount > factor) factor = element.amount;
+        });
+
+        Array.from(document.getElementsByClassName("dartboardVisual")[0].children).forEach((element) => {
+            element.style.opacity = 0;
+        });
+
+        let out = [];
+        for (let i = 0; i < array.length; i++) {
+            out[i] = {};
+            out[i].notation = array[i].notation;
+            out[i].amount = array[i].amount / factor * 0.85;
+        }
+        return out;
+    }
 }

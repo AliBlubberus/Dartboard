@@ -4,6 +4,8 @@
 *{
     margin: 0;
     padding: 0;
+
+    user-select: none;
 }
 
 :root {
@@ -365,7 +367,7 @@ h3{
 
 .bestPlayers {
     width: 100%;
-    flex: 5;
+    flex: 4;
     display: flex;
     flex-direction: column;
 }
@@ -447,8 +449,8 @@ h3{
 }
 
 .scoreboardPicture {
-    width: 60px;
-    height: 60px;
+    height: 80%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
 
     background: url("svg/user-solid.svg");
@@ -472,7 +474,7 @@ h3{
 
 .gameDiagram {
     width: 100%;
-    flex: 2;
+    height: 30%;
 
     display: flex;
     flex-direction: column;
@@ -645,11 +647,16 @@ h3{
 
     display: grid;
     place-items: center;
+
+    background-image: url("./svg/dartboard.svg");
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .dartboardVisual {
     width: 90%;
-    height: 90%;
+    aspect-ratio: 1 / 1;
 }
 
 .aimSelectedPlayerContainer {
@@ -664,6 +671,8 @@ h3{
     height: 100%;
     display: grid;
     place-items: center;
+
+    cursor: pointer;
 }
 
 .selectorArrow svg {

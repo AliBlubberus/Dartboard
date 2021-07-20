@@ -125,14 +125,14 @@
                                                 <div class="scoreboardPicture"></div>
                                             </div>
                                             <div class="scoreboardPlayerName">
-                                                <h3>Player Name</h3>
+                                                <h3 id="top1Name">Player Name</h3>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="leaderboardPlayerInfo">
-                                        <h3>Average Score: 420</h3>
-                                        <h3>Darts: 69</h3>
+                                        <h3 id="top1Avrg">Average Score: 420</h3>
+                                        <h3 id="top1Darts">Darts: 69</h3>
                                     </div>
                                 </div>
 
@@ -144,14 +144,14 @@
                                                 <div class="scoreboardPicture"></div>
                                             </div>
                                             <div class="scoreboardPlayerName">
-                                                <h3>Player Name</h3>
+                                                <h3 id="top2Name">Player Name</h3>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="leaderboardPlayerInfo">
-                                        <h3>Average Score: 420</h3>
-                                        <h3>Darts: 69</h3>
+                                        <h3 id="top2Avrg">Average Score: 420</h3>
+                                        <h3 id="top2Darts">Darts: 69</h3>
                                     </div>
                                 </div>
 
@@ -163,14 +163,14 @@
                                                 <div class="scoreboardPicture"></div>
                                             </div>
                                             <div class="scoreboardPlayerName">
-                                                <h3>Player Name</h3>
+                                                <h3 id="top3Name">Player Name</h3>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="leaderboardPlayerInfo">
-                                        <h3>Average Score: 420</h3>
-                                        <h3>Darts: 69</h3>
+                                        <h3 id="top3Avrg">Average Score: 420</h3>
+                                        <h3 id="top3Darts">Darts: 69</h3>
                                     </div>
                                 </div>
 
@@ -182,14 +182,14 @@
                                                 <div class="scoreboardPicture"></div>
                                             </div>
                                             <div class="scoreboardPlayerName">
-                                                <h3>Player Name</h3>
+                                                <h3 id="top4Name">Player Name</h3>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="leaderboardPlayerInfo">
-                                        <h3>Average Score: 420</h3>
-                                        <h3>Darts: 69</h3>
+                                        <h3 id="top4Avrg">Average Score: 420</h3>
+                                        <h3 id="top4Darts">Darts: 69</h3>
                                     </div>
                                 </div>
                             </div>
@@ -249,14 +249,98 @@
 
                         <div class="cardContent">
                             <div class="aimVisualContainer">
-                                <img src="svg/dartboard.svg" class="dartboardVisual" />
+                                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="dartboardVisual">
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M219.177 27.0937L215.837 3.32428C227.006 1.79181 238.41 1 250 1C261.59 1 272.994 1.79181 284.163 3.32427L280.823 27.0937C270.746 25.7132 260.456 25 250 25C239.544 25 229.254 25.7132 219.177 27.0937Z" fill="#fff" id="D20"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M358.73 25.9306C338.452 16.0725 316.635 8.88604 293.738 4.82877L289.57 28.4681C310.227 32.133 329.909 38.6163 348.206 47.5066L358.73 25.9306Z" fill="#fff" id="D1"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M422.61 70.5372L405.938 87.8014C391.124 73.5555 374.363 61.3198 356.093 51.533L367.363 30.3381C387.615 41.1814 406.194 54.7437 422.61 70.5372Z" fill="#fff" id="D18"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M412.199 94.0617L429.463 77.3899C445.256 93.8064 458.819 112.385 469.662 132.637L448.467 143.907C438.68 125.637 426.444 108.876 412.199 94.0617Z" fill="#fff" id="D4"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M452.493 151.794L474.069 141.27C483.927 161.548 491.114 183.365 495.171 206.262L471.532 210.43C467.867 189.773 461.384 170.091 452.493 151.794Z" fill="#fff" id="D13"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M472.906 219.177L496.676 215.837C498.208 227.006 499 238.41 499 250C499 261.59 498.208 272.994 496.676 284.163L472.906 280.823C474.287 270.746 475 260.456 475 250C475 239.544 474.287 229.254 472.906 219.177Z" fill="#fff" id="D6"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M471.532 289.57L495.171 293.738C491.114 316.635 483.927 338.452 474.069 358.73L452.493 348.206C461.384 329.909 467.867 310.227 471.532 289.57Z" fill="#fff" id="D10"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M448.467 356.093L469.662 367.363C458.819 387.615 445.256 406.194 429.463 422.61L412.199 405.938C426.444 391.124 438.68 374.363 448.467 356.093Z" fill="#fff" id="D15"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M405.938 412.199L422.61 429.463C406.194 445.256 387.615 458.819 367.363 469.662L356.093 448.467C374.363 438.68 391.124 426.444 405.938 412.199Z" fill="#fff" id="D2"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M293.738 495.171C316.635 491.114 338.452 483.927 358.73 474.069L348.206 452.493C329.909 461.384 310.227 467.867 289.57 471.532L293.738 495.171Z" fill="#fff" id="D17"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M280.823 472.906L284.163 496.676C272.994 498.208 261.59 499 250 499C238.41 499 227.006 498.208 215.837 496.676L219.177 472.906C229.254 474.287 239.544 475 250 475C260.456 475 270.746 474.287 280.823 472.906Z" fill="#fff" id="D3"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M210.43 471.532L206.262 495.171C183.364 491.114 161.548 483.927 141.27 474.069L151.794 452.493C170.091 461.384 189.773 467.867 210.43 471.532Z" fill="#fff" id="D19"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M143.907 448.467L132.637 469.662C112.385 458.819 93.8064 445.256 77.3899 429.463L94.0617 412.199C108.876 426.444 125.637 438.68 143.907 448.467Z" fill="#fff" id="D7"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M87.8014 405.938L70.5372 422.61C54.7437 406.194 41.1814 387.615 30.3381 367.363L51.533 356.093C61.3198 374.363 73.5555 391.124 87.8014 405.938Z" fill="#fff" id="D16"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M47.5066 348.206L25.9306 358.73C16.0726 338.452 8.88604 316.635 4.82878 293.738L28.4682 289.57C32.133 310.227 38.6163 329.909 47.5066 348.206Z" fill="#fff" id="D8"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M27.0937 280.823L3.32428 284.163C1.79181 272.994 1 261.59 1 250C1 238.41 1.79181 227.006 3.32428 215.837L27.0937 219.177C25.7132 229.254 25 239.544 25 250C25 260.456 25.7132 270.746 27.0937 280.823Z" fill="#fff" id="D11"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M28.4682 210.43L4.82878 206.262C8.88604 183.365 16.0725 161.548 25.9306 141.27L47.5066 151.794C38.6163 170.091 32.133 189.773 28.4682 210.43Z" fill="#fff" id="D14"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M51.533 143.907L30.3381 132.637C41.1814 112.385 54.7437 93.8064 70.5372 77.3899L87.8014 94.0617C73.5555 108.876 61.3198 125.637 51.533 143.907Z" fill="#fff" id="D9"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M94.0617 87.8014L77.3899 70.5372C93.8064 54.7437 112.385 41.1814 132.637 30.3381L143.907 51.533C125.637 61.3198 108.876 73.5555 94.0617 87.8014Z" fill="#fff" id="D12"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M151.794 47.5066L141.27 25.9306C161.548 16.0726 183.365 8.88604 206.262 4.82878L210.43 28.4682C189.773 32.133 170.091 38.6164 151.794 47.5066Z" fill="#fff" id="D5"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M212.316 39.165L224.324 107.266C211.136 109.623 198.566 113.762 186.871 119.427L156.555 57.2697C173.956 48.8174 192.673 42.6522 212.316 39.165Z" fill="#fff" id="LS5"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M279.311 37.8494L269.687 106.325C263.249 105.451 256.677 105 250 105C243.323 105 236.751 105.451 230.313 106.325L220.689 37.8494C230.272 36.5377 240.057 35.86 250 35.86C259.943 35.86 269.728 36.5377 279.311 37.8494Z" fill="#fff" id="LS20"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M343.445 57.2697L313.129 119.427C301.434 113.762 288.864 109.623 275.676 107.266L287.684 39.165C307.327 42.6522 326.044 48.8174 343.445 57.2697Z" fill="#fff" id="LS1"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M318.528 122.183C330.188 128.448 340.892 136.261 350.365 145.349L398.394 95.6135C384.305 82.0679 368.366 70.4324 350.994 61.1238L318.528 122.183Z" fill="#fff" id="LS18"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M438.876 149.006L377.817 181.472C371.552 169.812 363.738 159.108 354.651 149.635L404.387 101.606C417.932 115.695 429.568 131.634 438.876 149.006Z" fill="#fff" id="LS4"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M460.835 212.316L392.734 224.324C390.377 211.136 386.238 198.566 380.573 186.871L442.73 156.555C451.183 173.956 457.348 192.673 460.835 212.316Z" fill="#fff" id="LS13"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M462.151 279.311L393.675 269.687C394.549 263.249 395 256.677 395 250C395 243.323 394.549 236.751 393.675 230.313L462.151 220.689C463.462 230.272 464.14 240.057 464.14 250C464.14 259.943 463.462 269.728 462.151 279.311Z" fill="#fff" id="LS6"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M442.73 343.445L380.573 313.129C386.238 301.434 390.377 288.864 392.734 275.676L460.835 287.684C457.348 307.327 451.183 326.044 442.73 343.445Z" fill="#fff" id="LS10"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M404.387 398.394L354.651 350.365C363.738 340.892 371.552 330.188 377.817 318.528L438.876 350.994C429.568 368.366 417.932 384.305 404.387 398.394Z" fill="#fff" id="LS15"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M350.365 354.651L398.394 404.387C384.305 417.932 368.366 429.568 350.994 438.876L318.528 377.817C330.188 371.552 340.892 363.739 350.365 354.651Z" fill="#fff" id="LS2"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M287.684 460.835L275.676 392.734C288.864 390.377 301.434 386.238 313.129 380.573L343.445 442.73C326.044 451.183 307.327 457.348 287.684 460.835Z" fill="#fff" id="LS17"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M220.689 462.151L230.313 393.675C236.751 394.549 243.323 395 250 395C256.677 395 263.249 394.549 269.687 393.675L279.311 462.151C269.728 463.462 259.943 464.14 250 464.14C240.057 464.14 230.272 463.462 220.689 462.151Z" fill="#fff" id="LS3"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M156.555 442.73L186.871 380.573C198.566 386.238 211.136 390.377 224.324 392.734L212.316 460.835C192.673 457.348 173.956 451.183 156.555 442.73Z" fill="#fff" id="LS19"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M101.606 404.387L149.635 354.651C159.108 363.738 169.812 371.552 181.472 377.817L149.006 438.876C131.634 429.568 115.695 417.932 101.606 404.387Z" fill="#fff" id="LS7"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M61.1238 350.994L122.183 318.528C128.448 330.188 136.261 340.892 145.349 350.365L95.6135 398.394C82.0679 384.305 70.4324 368.366 61.1238 350.994Z" fill="#fff" id="LS16"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M39.165 287.684L107.266 275.676C109.623 288.864 113.762 301.434 119.427 313.129L57.2697 343.445C48.8174 326.044 42.6522 307.327 39.165 287.684Z" fill="#fff" id="LS8"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M37.8494 220.689L106.325 230.313C105.451 236.751 105 243.323 105 250C105 256.677 105.451 263.249 106.325 269.687L37.8494 279.311C36.5377 269.728 35.86 259.943 35.86 250C35.86 240.057 36.5377 230.272 37.8494 220.689Z" fill="#fff" id="LS11"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M57.2697 156.555L119.427 186.871C113.762 198.566 109.623 211.136 107.266 224.324L39.165 212.316C42.6522 192.673 48.8174 173.956 57.2697 156.555Z" fill="#fff" id="LS14"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M95.6135 101.606L145.349 149.635C136.261 159.108 128.448 169.812 122.183 181.472L61.1238 149.006C70.4324 131.634 82.0679 115.695 95.6135 101.606Z" fill="#fff" id="LS9"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M149.006 61.1238L181.472 122.183C169.812 128.448 159.108 136.261 149.635 145.349L101.606 95.6135C115.695 82.0679 131.634 70.4324 149.006 61.1238Z" fill="#fff" id="LS12"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M266.207 131.085L268.22 116.764C262.262 115.957 256.18 115.54 250 115.54C243.82 115.54 237.738 115.957 231.78 116.764L233.793 131.085C239.093 130.37 244.503 130 250 130C255.497 130 260.907 130.37 266.207 131.085Z" fill="#fff" id="T20"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M302.167 141.902L308.507 128.902C297.683 123.663 286.049 119.832 273.845 117.648L271.334 131.891C282.188 133.838 292.536 137.245 302.167 141.902Z" fill="#fff" id="T1"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M332.999 163.333L343.044 152.931C334.274 144.523 324.368 137.292 313.578 131.491L306.789 144.261C316.384 149.425 325.195 155.857 332.999 163.333Z" fill="#fff" id="T18"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M336.668 167.001C344.143 174.805 350.575 183.617 355.739 193.211L368.509 186.422C362.708 175.632 355.477 165.726 347.069 156.956L336.668 167.001Z" fill="#fff" id="T4"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M371.098 191.493L358.098 197.833C362.755 207.464 366.162 217.812 368.109 228.666L382.352 226.155C380.168 213.951 376.337 202.317 371.098 191.493Z" fill="#fff" id="T13"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M383.236 231.78L368.915 233.793C369.63 239.093 370 244.503 370 250C370 255.497 369.63 260.907 368.915 266.207L383.236 268.22C384.043 262.262 384.46 256.18 384.46 250C384.46 243.82 384.043 237.738 383.236 231.78Z" fill="#fff" id="T6"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M382.352 273.845L368.109 271.334C366.162 282.188 362.755 292.536 358.098 302.167L371.098 308.507C376.337 297.683 380.168 286.049 382.352 273.845Z" fill="#fff" id="T10"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M368.509 313.578L355.739 306.789C350.575 316.384 344.143 325.195 336.667 332.999L347.069 343.044C355.477 334.274 362.708 324.368 368.509 313.578Z" fill="#fff" id="T15"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M332.999 336.668C325.195 344.143 316.383 350.575 306.789 355.739L313.578 368.509C324.368 362.708 334.274 355.477 343.044 347.069L332.999 336.668Z" fill="#fff" id="T2"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M302.167 358.098C292.536 362.755 282.188 366.162 271.334 368.109L273.845 382.352C286.049 380.168 297.683 376.337 308.507 371.098L302.167 358.098Z" fill="#fff" id="T17"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M250 370C244.503 370 239.093 369.63 233.793 368.915L231.78 383.236C237.738 384.043 243.82 384.46 250 384.46C256.18 384.46 262.262 384.043 268.22 383.236L266.207 368.915C260.907 369.63 255.497 370 250 370Z" fill="#fff" id="T3"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M228.666 368.109C217.812 366.162 207.464 362.755 197.833 358.098L191.493 371.098C202.317 376.337 213.951 380.168 226.155 382.352L228.666 368.109Z" fill="#fff" id="T19"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M193.211 355.739C183.617 350.575 174.805 344.143 167.001 336.667L156.956 347.069C165.726 355.477 175.632 362.708 186.422 368.509L193.211 355.739Z" fill="#fff" id="T7"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M163.333 332.999C155.857 325.195 149.425 316.383 144.261 306.789L131.491 313.578C137.292 324.368 144.523 334.274 152.931 343.044L163.333 332.999Z" fill="#fff" id="T16"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M128.902 308.507L141.902 302.167C137.245 292.536 133.838 282.188 131.891 271.334L117.648 273.845C119.832 286.049 123.663 297.683 128.902 308.507Z" fill="#fff" id="T8"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M116.764 268.22L131.085 266.207C130.37 260.907 130 255.497 130 250C130 244.503 130.37 239.093 131.085 233.793L116.764 231.78C115.957 237.738 115.54 243.82 115.54 250C115.54 256.18 115.957 262.262 116.764 268.22Z" fill="#fff" id="T11"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M131.891 228.666C133.838 217.812 137.245 207.464 141.902 197.833L128.902 191.493C123.663 202.317 119.832 213.951 117.648 226.155L131.891 228.666Z" fill="#fff" id="T14"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M144.261 193.211C149.425 183.617 155.857 174.805 163.333 167.001L152.931 156.956C144.523 165.726 137.292 175.632 131.491 186.422L144.261 193.211Z" fill="#fff" id="T9"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M193.211 144.261L186.422 131.491C175.632 137.292 165.726 144.523 156.956 152.931L167.001 163.333C174.805 155.857 183.617 149.425 193.211 144.261Z" fill="#fff" id="T12"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M228.666 131.891L226.155 117.648C213.951 119.832 202.317 123.663 191.493 128.902L197.833 141.902C207.464 137.245 217.812 133.838 228.666 131.891Z" fill="#fff" id="T5"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M235.296 141.782L242.84 195.462C245.184 195.157 247.573 195 250 195C252.427 195 254.816 195.157 257.16 195.462L264.704 141.782C259.895 141.134 254.987 140.8 250 140.8C245.013 140.8 240.105 141.134 235.296 141.782Z" fill="#fff" id="SS20"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M202.569 151.611L226.334 200.338C230.6 198.301 235.169 196.798 239.956 195.915L230.542 142.528C220.696 144.299 211.308 147.39 202.569 151.611Z" fill="#fff" id="SS5"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M174.504 171.101L212.155 210.091C215.618 206.806 219.508 203.966 223.734 201.665L198.283 153.799C189.58 158.488 181.586 164.322 174.504 171.101Z" fill="#fff" id="SS12"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M153.799 198.283L201.665 223.734C203.966 219.508 206.806 215.618 210.091 212.155L171.101 174.504C164.322 181.586 158.488 189.58 153.799 198.283Z" fill="#fff" id="SS9"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M142.528 230.542L195.915 239.956C196.798 235.169 198.301 230.6 200.338 226.334L151.611 202.569C147.39 211.308 144.299 220.696 142.528 230.542Z" fill="#fff" id="SS14"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M141.782 264.704C141.134 259.895 140.8 254.987 140.8 250C140.8 245.013 141.134 240.105 141.782 235.296L195.462 242.84C195.157 245.184 195 247.573 195 250C195 252.427 195.157 254.816 195.462 257.16L141.782 264.704Z" fill="#fff" id="SS11"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M151.611 297.431C147.39 288.692 144.299 279.304 142.528 269.458L195.915 260.044C196.798 264.831 198.301 269.4 200.338 273.666L151.611 297.431Z" fill="#fff" id="SS8"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M171.101 325.496L210.091 287.845C206.806 284.382 203.966 280.492 201.665 276.266L153.799 301.717C158.488 310.42 164.322 318.414 171.101 325.496Z" fill="#fff" id="SS16"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M212.155 289.909L174.504 328.899C181.586 335.678 189.58 341.512 198.283 346.201L223.734 298.335C219.508 296.034 215.618 293.194 212.155 289.909Z" fill="#fff" id="SS7"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M226.334 299.662L202.569 348.389C211.308 352.61 220.696 355.701 230.542 357.472L239.956 304.085C235.169 303.202 230.6 301.699 226.334 299.662Z" fill="#fff" id="SS19"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M242.84 304.538L235.296 358.219C240.105 358.866 245.013 359.2 250 359.2C254.987 359.2 259.895 358.866 264.704 358.219L257.16 304.538C254.816 304.843 252.427 305 250 305C247.573 305 245.184 304.843 242.84 304.538Z" fill="#fff" id="SS3"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M260.044 304.085L269.458 357.472C279.304 355.701 288.692 352.61 297.431 348.389L273.666 299.662C269.4 301.699 264.831 303.202 260.044 304.085Z" fill="#fff" id="SS17"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M276.266 298.335L301.717 346.201C310.42 341.512 318.414 335.678 325.496 328.899L287.845 289.909C284.382 293.194 280.492 296.034 276.266 298.335Z" fill="#fff" id="SS2"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M346.201 301.717C341.512 310.42 335.678 318.414 328.899 325.496L289.909 287.845C293.194 284.382 296.034 280.492 298.335 276.266L346.201 301.717Z" fill="#fff" id="SS15"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M357.472 269.458C355.701 279.304 352.61 288.692 348.389 297.431L299.662 273.666C301.699 269.4 303.202 264.831 304.085 260.044L357.472 269.458Z" fill="#fff" id="SS10"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M358.219 235.296C358.866 240.105 359.2 245.013 359.2 250C359.2 254.987 358.866 259.895 358.219 264.704L304.538 257.16C304.843 254.816 305 252.427 305 250C305 247.573 304.843 245.184 304.538 242.84L358.219 235.296Z" fill="#fff" id="SS6"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M348.389 202.569C352.61 211.308 355.701 220.696 357.472 230.542L304.085 239.956C303.202 235.169 301.699 230.6 299.662 226.334L348.389 202.569Z" fill="#fff" id="SS13"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M328.899 174.504C335.678 181.586 341.512 189.58 346.201 198.283L298.335 223.734C296.034 219.508 293.194 215.618 289.909 212.155L328.899 174.504Z" fill="#fff" id="SS4"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M301.717 153.799L276.266 201.665C280.492 203.966 284.382 206.806 287.845 210.091L325.496 171.101C318.414 164.322 310.42 158.488 301.717 153.799Z" fill="#fff" id="SS18"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M269.458 142.528L260.044 195.915C264.831 196.798 269.4 198.301 273.666 200.338L297.431 151.611C288.692 147.39 279.304 144.299 269.458 142.528Z" fill="#fff" id="SS1"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M294.64 249.82C294.64 274.573 274.573 294.64 249.82 294.64C225.067 294.64 205 274.573 205 249.82C205 225.067 225.067 205 249.82 205C274.573 205 294.64 225.067 294.64 249.82ZM249.82 279.82C266.389 279.82 279.82 266.389 279.82 249.82C279.82 233.251 266.389 219.82 249.82 219.82C233.251 219.82 219.82 233.251 219.82 249.82C219.82 266.389 233.251 279.82 249.82 279.82Z" fill="#fff" id="Bull"/>
+                                    <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M249.82 264.78C258.083 264.78 264.78 258.305 264.78 250.32C264.78 242.335 258.083 235.86 249.82 235.86C241.557 235.86 234.86 242.335 234.86 250.32C234.86 258.305 241.557 264.78 249.82 264.78Z" fill="#fff" id="DBull"/>
+                                    </svg>
+                                    
                             </div>
                             <div class="aimSelectedPlayerContainer">
-                                <div class="selectorArrow"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"></path></svg></div>
+                                <div class="selectorArrow" onclick="moveCurrentAimPlayer(false)"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"></path></svg></div>
                                 <div class="selectedPlayerNameContainer">
-                                    <h3>Player Name</h3>
+                                    <h3 id="aimCardPlayerName">Player Name</h3>
                                 </div>
-                                <div class="selectorArrow"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path></svg></div>
+                                <div class="selectorArrow" onclick="moveCurrentAimPlayer(true)"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path></svg></div>
                             </div>
                         </div>
                     </div>

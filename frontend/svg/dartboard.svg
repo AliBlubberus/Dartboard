@@ -1,4 +1,4 @@
-<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M219.177 27.0937L215.837 3.32428C227.006 1.79181 238.41 1 250 1C261.59 1 272.994 1.79181 284.163 3.32427L280.823 27.0937C270.746 25.7132 260.456 25 250 25C239.544 25 229.254 25.7132 219.177 27.0937Z" fill="#136E73aa" id="D20"/>
 <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M358.73 25.9306C338.452 16.0725 316.635 8.88604 293.738 4.82877L289.57 28.4681C310.227 32.133 329.909 38.6163 348.206 47.5066L358.73 25.9306Z" fill="#E9665Daa" id="D1"/>
 <path class="dartboardTile" fill-rule="evenodd" clip-rule="evenodd" d="M422.61 70.5372L405.938 87.8014C391.124 73.5555 374.363 61.3198 356.093 51.533L367.363 30.3381C387.615 41.1814 406.194 54.7437 422.61 70.5372Z" fill="#136E73aa" id="D18"/>
