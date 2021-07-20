@@ -19,7 +19,7 @@ app.whenReady().then(() => {
     });
 
     //load dashboard
-    mainWindow.loadFile("frontend/index.htm");
+    mainWindow.loadFile("frontend/players.htm");
     //mainWindow.setMenu(null);
 });
 
