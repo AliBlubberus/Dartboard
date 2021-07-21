@@ -277,7 +277,7 @@ function generateLastGameCard() {
     top4list.forEach((element) => {
         players[players.length] = getLocalIndexByPlayerName(element.name, latestGame.playerData);
     });
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < clamp(latestGame.playerData.length, 0, 4); i++) {
         let newLayer = document.createElementNS(ns, "polyline");
 
         newLayer.setAttribute("class", "diagramLayer" + (i + 1));
@@ -288,17 +288,21 @@ function generateLastGameCard() {
     };
 
     let top4ScoreboardItems = [];
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < clamp(latestGame.playerData.length, 0, 4); j++) {
         top4ScoreboardItems[j] = [];
         top4ScoreboardItems[j][0] = document.getElementById("top" + (j + 1) + "Name");
         top4ScoreboardItems[j][1] = document.getElementById("top" + (j + 1) + "Avrg");
         top4ScoreboardItems[j][2] = document.getElementById("top" + (j + 1) + "Darts");
     }
 
-    for (let k = 0; k < 4; k++) {
+    for (let k = 0; k < clamp(latestGame.playerData.length, 0, 4); k++) {
         top4ScoreboardItems[k][0].textContent = top4list[k].name;
         top4ScoreboardItems[k][1].textContent = "Average Score: " + top4list[k].averageScore;
         top4ScoreboardItems[k][2].textContent = "Darts: " + top4list[k].totalDarts;
+    }
+
+    for (let l = 1; l <= 4; l++) {
+        if (l > latestGame.playerData.length) document.getElementById("scoreboardPlayerContainer" + l).remove();
     }
 }
 
@@ -326,11 +330,14 @@ function generateProcedualRecordingArray(player) {
 }
 
 function generateDartSum(obj) {
-    let score = 0;
-    obj.darts.forEach(element => {
-        score += element.score;
-    });
-    return score;
+    if (obj && obj.darts) {
+        let score = 0;
+        obj.darts.forEach(element => {
+            score += element.score;
+        });
+        return score;
+    }
+    return 0;
 }
 
 function roundNumber(num) {
