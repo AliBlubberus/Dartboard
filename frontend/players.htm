@@ -7,6 +7,8 @@
         <title>Players | Dartboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./players.css">
+    
+        <script defer src="playerManagement.js"></script>
     </head>
     <body>
         <!-- Sidebar -->
@@ -84,8 +86,9 @@
             <div class="mainCardColumn">
                 <div class="cardTitleContainer"><h1>Players</h1></div>
                 <div class="cardContent" id="playerCardLeftColumn">
-                    <div class="playersList">
+                    <div class="playersList" id="playersList">
                         <!-- Place Player Listings Here -->
+                        <!--
                         <div class="playerListingContainer">
                             <div class="playerListing">
                                 <div class="picContainer"><div class="pic"></div></div>
@@ -104,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        -->
                     </div>
                 </div>
             </div>
@@ -118,9 +121,28 @@
                         <div class="playerNameFieldContainer">
                             <input type="text" placeholder="Player Name" id="playerNameField">
                         </div>
-                        <div class="playerProfilePicFieldContainer">
-                            <input type="file" id="profilePicFileField">
+                        <div class="addPlayerButtonContainer">
+                            <div class="addPlayerButton" onclick="addPlayer()"><h2>Add Player</h2></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="deleteConfirmBackground">
+            <div class="deleteConfirmPopup">
+                <div class="deletePopupTitle"><h2>Are you sure about that?</h2></div>
+                <div class="deletePopupParagraphContainer">
+                    <p>You are about to permanently delete a player and all files associated with it.
+                        This is irreversible. Do you wish to procceed?
+                    </p>
+                </div>
+                <div class="deletePopupButtonsContainer">
+                    <div class="deletePopupButtonContainer">
+                        <div class="deletePopupButton"><h2>Cancel</h2></div>
+                    </div>
+                    <div class="deletePopupButtonContainer">
+                        <div class="deletePopupButton" id="deleteProceedButton"><h2>Proceed</h2></div>
                     </div>
                 </div>
             </div>

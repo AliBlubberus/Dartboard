@@ -1,1 +1,30 @@
-[{"name":"Adrian","gamesPlayed":54,"totalScore":4041,"averageScorePerGame":74.83333333333333,"gamesWon":8},{"name":"Philipp","gamesPlayed":34,"totalScore":2126,"gamesWon":0,"averageScorePerGame":62.529411764705884},{"name":"Vaddurn","gamesPlayed":73,"totalScore":3910,"gamesWon":0,"averageScorePerGame":53.56164383561644},{"name":"Johanna","gamesPlayed":30,"totalScore":922,"gamesWon":0,"averageScorePerGame":30.733333333333334}]
+[
+  {
+    "name": "Adrian",
+    "gamesPlayed": 54,
+    "totalScore": 4041,
+    "averageScorePerGame": 74.83333333333333,
+    "gamesWon": 8
+  },
+  {
+    "name": "Philipp",
+    "gamesPlayed": 34,
+    "totalScore": 2126,
+    "gamesWon": 0,
+    "averageScorePerGame": 62.529411764705884
+  },
+  {
+    "name": "Vaddurn",
+    "gamesPlayed": 73,
+    "totalScore": 3910,
+    "gamesWon": 0,
+    "averageScorePerGame": 53.56164383561644
+  },
+  {
+    "name": "Johanna",
+    "gamesPlayed": 30,
+    "totalScore": 922,
+    "gamesWon": 0,
+    "averageScorePerGame": 30.733333333333334
+  }
+]

@@ -54,6 +54,7 @@ ipcMain.on("startNewGame", (event, arg) => {
     gameWindow.webContents.on('did-finish-load', () => {gameWindow.webContents.send("initializeGame", {"playerData": isolatedPlayerData, "settings": gameSettings})});
     mainWindow.webContents.executeJavaScript("gameRunning = true;");
     gameWindow.on("close", function() {mainWindow.webContents.executeJavaScript("gameRunning = false;")});
+    event.returnValue = null;
 });
 
 ipcMain.on("handleFinishedGame", (event, arg) => {
@@ -67,6 +68,12 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
     gameWindow.close();
     overrideLocalPlayerData();
     fs.writeFileSync("./json/latestGame.json", JSON.stringify(arg));
+    event.returnValue = null;
+});
+
+ipcMain.on("overridePlayerData", (event, arg) => {
+    overrideLocalPlayerData(arg);
+    event.returnValue = null;
 });
 
 function getGlobalPlayerIndexByName(name) {
@@ -90,7 +97,11 @@ function isolatePlayerData(elements) {
 //THESE FUNCTIONS OVERRIDE FILES
 //USE WITH CAUTION
 
-function overrideLocalPlayerData() {
-    let string = JSON.stringify(rawPlayerData);
+function overrideLocalPlayerData(data) {
+    let string;
+
+    if (!data)  string = JSON.stringify(rawPlayerData);
+    else string = JSON.stringify(data);
+
     fs.writeFileSync("./json/players.json", string);
 }
