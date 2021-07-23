@@ -106,7 +106,10 @@ function overrideLocalPlayerData(data) {
     let string;
 
     if (!data)  string = JSON.stringify(rawPlayerData);
-    else string = JSON.stringify(data);
+    else { 
+        string = JSON.stringify(data);
+        rawPlayerData = data;
+    }
 
     fs.writeFileSync("./json/players.json", string);
 }

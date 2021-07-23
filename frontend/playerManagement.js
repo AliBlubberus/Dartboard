@@ -183,6 +183,7 @@ function deletePlayer(index) {
 function instantiateRenamePopup(playerID) {
     let background = document.createElement("div");
     background.setAttribute("class", "renamePopupBackground");
+    background.setAttribute("id", "renamePopupRoot");
     document.body.appendChild(background);
 
     let window = document.createElement("div");
@@ -209,7 +210,7 @@ function instantiateRenamePopup(playerID) {
 
     let button = document.createElement("div");
     button.setAttribute("class", "renameActionButton");
-    button.setAttribute("onclick", "renamePlayer(" + playerID +", '" + document.getElementById("renameTextInput").value + "', '" + rawPlayerData[playerID].name + "')");
+    button.setAttribute("onclick", "renamePlayer(" + playerID +', "' + rawPlayerData[playerID].name + '"); document.getElementById("renamePopupRoot").remove()');
     content.appendChild(button);
 
     let buttonText = document.createElement("h2");
@@ -217,9 +218,13 @@ function instantiateRenamePopup(playerID) {
     button.appendChild(buttonText);
 }
 
-function renamePlayer(playerID, newName, oldName) {
+function renamePlayer(playerID, oldName) {
+    let newName = document.getElementById("renameTextInput").value;
+    console.log(playerID, newName, oldName);
     let singleLetters = newName.split("");
+    console.log(singleLetters);
     if (nameAvailable(newName) && newName != "" && singleLetters[0] != " " && singleLetters[singleLetters.length] != " ") {
+        console.log("Renaming Player " + oldName + "...");
         rawPlayerData[playerID].name = newName;
         ipcRenderer.sendSync("overridePlayerData", rawPlayerData);
         let latestGame = ipcRenderer.sendSync("loadLatestGame");
