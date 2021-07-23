@@ -69,6 +69,7 @@ function instantiatePlayerListing(index) {
 
     let editButton = document.createElement("div");
     editButton.setAttribute("class", "editPlayerButton");
+    editButton.setAttribute("onclick", "instantiateRenamePopup(" + index + ")");
     actionsContainer.appendChild(editButton);
 
     let editIcon = document.createElementNS(ns, "svg");
@@ -175,6 +176,59 @@ function deletePlayer(index) {
 
     rawPlayerData.splice(index, 1);
     ipcRenderer.sendSync("overridePlayerData", rawPlayerData);
+
+    generatePlayerList();
+}
+
+function instantiateRenamePopup(playerID) {
+    let background = document.createElement("div");
+    background.setAttribute("class", "renamePopupBackground");
+    document.body.appendChild(background);
+
+    let window = document.createElement("div");
+    window.setAttribute("class", "renamePopup");
+    background.appendChild(window);
+
+    let titleContainer = document.createElement("div");
+    titleContainer.setAttribute("class", "renameTitleContainer");
+    window.appendChild(titleContainer);
+
+    let title = document.createElement("h2");
+    title.textContent = "Rename " + rawPlayerData[playerID].name;
+    titleContainer.appendChild(title);
+
+    let content = document.createElement("div");
+    content.setAttribute("class", "renameContent");
+    window.appendChild(content);
+
+    let textField = document.createElement("input");
+    textField.setAttribute("type", "text");
+    textField.setAttribute("id", "renameTextInput");
+    textField.setAttribute("placeholder", "Enter New Name...");
+    content.appendChild(textField);
+
+    let button = document.createElement("div");
+    button.setAttribute("class", "renameActionButton");
+    button.setAttribute("onclick", "renamePlayer(" + playerID +", '" + document.getElementById("renameTextInput").value + "', '" + rawPlayerData[playerID].name + "')");
+    content.appendChild(button);
+
+    let buttonText = document.createElement("h2");
+    buttonText.textContent = "Accept";
+    button.appendChild(buttonText);
+}
+
+function renamePlayer(playerID, newName, oldName) {
+    let singleLetters = newName.split("");
+    if (nameAvailable(newName) && newName != "" && singleLetters[0] != " " && singleLetters[singleLetters.length] != " ") {
+        rawPlayerData[playerID].name = newName;
+        ipcRenderer.sendSync("overridePlayerData", rawPlayerData);
+        let latestGame = ipcRenderer.sendSync("loadLatestGame");
+        if (latestGame.playerData) {
+            for (let i = 0; i < latestGame.playerData.length; i++) {
+                if (latestGame.playerData[i].name == oldName) latestGame.playerData[i].name = newName;
+            }
+        }
+    }
 
     generatePlayerList();
 }
