@@ -595,9 +595,21 @@ h3 {
     place-items: center;
 }
 
+@keyframes deletePopupTitleFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .deletePopupTitle h2 {
     letter-spacing: 6px;
     font-size: 3rem;
+
+    animation-name: deletePopupTitleFadeIn;
+    animation-duration: 0.5s;
 
     color: var(--red);
 }
@@ -611,11 +623,26 @@ h3 {
     justify-content: center;
 }
 
+@keyframes deletePopupParagraphFadeIn {
+    from {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .deletePopupParagraphContainer p {
     width: 75%;
     height: 80%;
 
     text-align: center;
+
+    animation-name: deletePopupParagraphFadeIn;
+    animation-duration: 1s;
 
     color: var(--white);
     font-size: 2rem;

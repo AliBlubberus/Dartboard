@@ -38,7 +38,7 @@ function clearPlayersList() {
     });
 }
 
-function instantiatePlayerListing(obj) {
+function instantiatePlayerListing(index) {
     let listingContainer = document.createElement("div");
     listingContainer.setAttribute("class", "playerListingContainer");
     playerListObj.appendChild(listingContainer);
@@ -60,7 +60,7 @@ function instantiatePlayerListing(obj) {
     listing.appendChild(nameContainer);
 
     let nameText = document.createElement("h2");
-    nameText.textContent = obj.name;
+    nameText.textContent = rawPlayerData[index].name;
     nameContainer.appendChild(nameText);
 
     let actionsContainer = document.createElement("div");
@@ -82,6 +82,7 @@ function instantiatePlayerListing(obj) {
 
     let deleteButton = document.createElement("div");
     deleteButton.setAttribute("class", "deletePlayerButton");
+    deleteButton.setAttribute("onclick", "instantiateDeletionPopup(" + index + ")");
     actionsContainer.appendChild(deleteButton);
 
     let deleteIcon = document.createElementNS(ns, "svg");
@@ -96,7 +97,84 @@ function instantiatePlayerListing(obj) {
 
 function generatePlayerList() {
     clearPlayersList();
-    rawPlayerData.forEach((element) => {
-        instantiatePlayerListing(element);
-    });
+    for (let i = 0; i < rawPlayerData.length; i++) {
+        instantiatePlayerListing(i);
+    }
+}
+
+function instantiateDeletionPopup(playerID) {
+    let background = document.createElement("div");
+    background.setAttribute("class", "deleteConfirmBackground");
+    background.setAttribute("id", "deletionPopupRoot");
+    document.body.appendChild(background);
+
+    let window = document.createElement("div");
+    window.setAttribute("class", "deleteConfirmPopup");
+    background.appendChild(window);
+
+    let titleContainer = document.createElement("div");
+    titleContainer.setAttribute("class", "deletePopupTitle");
+    window.appendChild(titleContainer);
+
+    let title = document.createElement("h2");
+    title.textContent = "Are you sure about that?";
+    titleContainer.appendChild(title);
+
+    let paragraphContainer = document.createElement("div");
+    paragraphContainer.setAttribute("class", "deletePopupParagraphContainer");
+    window.appendChild(paragraphContainer);
+
+    let paragraph = document.createElement("p");
+    paragraph.textContent = "You are about to permanently delete '" + rawPlayerData[playerID].name + "' and all files associated with them. This is irreversible! Do you widh to proceed?";
+    paragraphContainer.appendChild(paragraph);
+
+    let buttonsContainer = document.createElement("div");
+    buttonsContainer.setAttribute("class", "deletePopupButtonsContainer");
+    window.appendChild(buttonsContainer);
+
+    let lButtonCont = document.createElement("div");
+    lButtonCont.setAttribute("class", "deletePopupButtonContainer");
+    buttonsContainer.appendChild(lButtonCont);
+
+    let rButtonCont = document.createElement("div");
+    rButtonCont.setAttribute("class", "deletePopupButtonContainer");
+    buttonsContainer.appendChild(rButtonCont);
+
+    let cancelButton = document.createElement("div");
+    cancelButton.setAttribute("class", "deletePopupButton");
+    cancelButton.setAttribute("onclick", "document.getElementById('deletionPopupRoot').remove()");
+    lButtonCont.appendChild(cancelButton);
+
+    let cancelText = document.createElement("h2");
+    cancelText.textContent = "Cancel";
+    cancelButton.appendChild(cancelText);
+
+    let proceedButton = document.createElement("div");
+    proceedButton.setAttribute("class", "deletePopupButton");
+    proceedButton.setAttribute("id", "deleteProceedButton");
+    proceedButton.setAttribute("onclick", "document.getElementById('deletionPopupRoot').remove(); deletePlayer(" + playerID + ")");
+    rButtonCont.appendChild(proceedButton);
+
+    let proceedText = document.createElement("h2");
+    proceedText.textContent = "Proceed";
+    proceedButton.appendChild(proceedText);
+}
+
+function deletePlayer(index) {
+    console.log("Deleting " + rawPlayerData[index].name + "...");
+
+    let latestGame = ipcRenderer.sendSync("loadLatestGame");
+    if (latestGame.playerData) {
+        let contains = false;
+        latestGame.playerData.forEach((element) => {
+            if (element.name == rawPlayerData[index].name) contains = true;
+        });
+        if (contains) ipcRenderer.sendSync("deleteLatestGame");
+    }
+
+
+    rawPlayerData.splice(index, 1);
+    ipcRenderer.sendSync("overridePlayerData", rawPlayerData);
+
+    generatePlayerList();
 }

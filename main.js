@@ -31,6 +31,11 @@ ipcMain.on("loadLatestGame", (event, arg) => {
     event.returnValue = JSON.parse(fs.readFileSync("./json/latestGame.json"));
 });
 
+ipcMain.on("deleteLatestGame", (event, arg) => {
+    fs.writeFileSync("./json/latestGame.json", "{}");
+    event.returnValue = null;
+});
+
 ipcMain.on("gameRunning", (event, arg) => {
     event.returnValue = gameWindow != null;
 })
