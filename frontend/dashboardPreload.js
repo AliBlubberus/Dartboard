@@ -34,9 +34,8 @@ function generatePlayerListing(object) {
     pictureContainer.setAttribute("class", "playerSelectPicContainer");
     playerItem.appendChild(pictureContainer);
 
-    let picture = document.createElement("img");
-    picture.setAttribute("class", "playerSelectPic");
-    picture.setAttribute("src", "svg/user-solid.svg");  //TODO: Replace this with the corresponding profile picture//
+    let picture = document.createElement("div");
+    picture.setAttribute("class", "playerSelectPic rank" + object.rank);
     pictureContainer.appendChild(picture);
 
     let nameContainer = document.createElement("div");
@@ -270,39 +269,54 @@ updateGameEndingButtons();
 // Game Summary Diagram
 
 function generateLastGameCard() {
-    console.log("Generating Graph...");
-    let top4list = getTop4();
+    try {
+        console.log("Generating Graph...");
+        let top4list = getTop4();
 
-    let players = [];
-    top4list.forEach((element) => {
-        players[players.length] = getLocalIndexByPlayerName(element.name, latestGame.playerData);
-    });
-    for (let i = 0; i < clamp(latestGame.playerData.length, 0, 4); i++) {
-        let newLayer = document.createElementNS(ns, "polyline");
+        let players = [];
+        top4list.forEach((element) => {
+            players[players.length] = getLocalIndexByPlayerName(element.name, latestGame.playerData);
+        });
+        for (let i = 0; i < clamp(latestGame.playerData.length, 0, 4); i++) {
+            let newLayer = document.createElementNS(ns, "polyline");
 
-        newLayer.setAttribute("class", "diagramLayer" + (i + 1));
-        newLayer.setAttribute("style", "stroke-width:2");
-        newLayer.setAttribute("points", generatePointDefinition(players[i]));
+            newLayer.setAttribute("class", "diagramLayer" + (i + 1));
+            newLayer.setAttribute("style", "stroke-width:2");
+            newLayer.setAttribute("points", generatePointDefinition(players[i]));
 
-        diagramSVG.appendChild(newLayer);
-    };
+            diagramSVG.appendChild(newLayer);
+        };
 
-    let top4ScoreboardItems = [];
-    for (let j = 0; j < clamp(latestGame.playerData.length, 0, 4); j++) {
-        top4ScoreboardItems[j] = [];
-        top4ScoreboardItems[j][0] = document.getElementById("top" + (j + 1) + "Name");
-        top4ScoreboardItems[j][1] = document.getElementById("top" + (j + 1) + "Avrg");
-        top4ScoreboardItems[j][2] = document.getElementById("top" + (j + 1) + "Darts");
+        let top4ScoreboardItems = [];
+        for (let j = 0; j < clamp(latestGame.playerData.length, 0, 4); j++) {
+            top4ScoreboardItems[j] = [];
+            top4ScoreboardItems[j][0] = document.getElementById("top" + (j + 1) + "Name");
+            top4ScoreboardItems[j][1] = document.getElementById("top" + (j + 1) + "Avrg");
+            top4ScoreboardItems[j][2] = document.getElementById("top" + (j + 1) + "Darts");
+        }
+
+        for (let k = 0; k < clamp(latestGame.playerData.length, 0, 4); k++) {
+            top4ScoreboardItems[k][0].textContent = top4list[k].name;
+            top4ScoreboardItems[k][1].textContent = "Average Score: " + top4list[k].averageScore;
+            top4ScoreboardItems[k][2].textContent = "Darts: " + top4list[k].totalDarts;
+        }
+
+        for (let l = 1; l <= 4; l++) {
+            if (l > latestGame.playerData.length) document.getElementById("scoreboardPlayerContainer" + l).remove();
+        }
     }
+    catch { //show placeholder if no recording for the latest game exists
+        console.log("No recording found, rendering placeholder");
+        let content = document.getElementById("lastGame").getElementsByClassName("cardContent")[0];
+        Array.from(content.children).forEach((element) => {
+            element.remove();
+        });
+        content.style.display = "grid";
+        content.style.placeItems = "center";
 
-    for (let k = 0; k < clamp(latestGame.playerData.length, 0, 4); k++) {
-        top4ScoreboardItems[k][0].textContent = top4list[k].name;
-        top4ScoreboardItems[k][1].textContent = "Average Score: " + top4list[k].averageScore;
-        top4ScoreboardItems[k][2].textContent = "Darts: " + top4list[k].totalDarts;
-    }
-
-    for (let l = 1; l <= 4; l++) {
-        if (l > latestGame.playerData.length) document.getElementById("scoreboardPlayerContainer" + l).remove();
+        let recordingMissingText = document.createElement("h2");
+        recordingMissingText.textContent = "No Recording Found...";
+        content.appendChild(recordingMissingText);
     }
 }
 
@@ -406,59 +420,74 @@ function moveCurrentAimPlayer(dir) {
 }
 
 function refreshAimCard(player) {
-    let dartFields = [];
+    try {
+        let dartFields = [];
 
-    for (let r = 0; r < latestGame.recording.length; r++) {
-        for (let d = 0; d < 3; d++) {
-            let dart = latestGame.recording[r][player].darts[d];
-            addDartToArray(dart);
-        }
-    }
-
-    function addDartToArray(item) {
-        let existing = false;
-        dartFields.forEach((element) => {
-            if (element.notation == item.notation) existing = true;
-        });
-
-        if (!existing) {
-            dartFields[dartFields.length] = {
-                "notation": item.notation,
-                "amount": 1
+        for (let r = 0; r < latestGame.recording.length; r++) {
+            for (let d = 0; d < 3; d++) {
+                let dart = latestGame.recording[r][player].darts[d];
+                addDartToArray(dart);
             }
         }
-        else {
-            let index;
-            for (let i = 0; i < dartFields.length; i++) {
-                if (item.notation == dartFields[i].notation) index = i;
+
+        function addDartToArray(item) {
+            let existing = false;
+            dartFields.forEach((element) => {
+                if (element.notation == item.notation) existing = true;
+            });
+
+            if (!existing) {
+                dartFields[dartFields.length] = {
+                    "notation": item.notation,
+                    "amount": 1
+                }
             }
-            dartFields[index].amount++;
+            else {
+                let index;
+                for (let i = 0; i < dartFields.length; i++) {
+                    if (item.notation == dartFields[i].notation) index = i;
+                }
+                dartFields[index].amount++;
+            }
+        }
+
+        console.log(dartFields);
+
+        let normalizedDartFields = normalizeDartArray(dartFields);
+        normalizedDartFields.forEach((element) => {
+            document.getElementById(element.notation).style.opacity = element.amount;
+        });
+
+        function normalizeDartArray(array) {
+            let factor = 0;
+            array.forEach((element) => {
+                if (element.amount > factor) factor = element.amount;
+            });
+
+            Array.from(document.getElementsByClassName("dartboardVisual")[0].children).forEach((element) => {
+                element.style.opacity = 0;
+            });
+
+            let out = [];
+            for (let i = 0; i < array.length; i++) {
+                out[i] = {};
+                out[i].notation = array[i].notation;
+                out[i].amount = array[i].amount / factor * 0.85;
+            }
+            return out;
         }
     }
-
-    console.log(dartFields);
-
-    let normalizedDartFields = normalizeDartArray(dartFields);
-    normalizedDartFields.forEach((element) => {
-        document.getElementById(element.notation).style.opacity = element.amount;
-    });
-
-    function normalizeDartArray(array) {
-        let factor = 0;
-        array.forEach((element) => {
-            if (element.amount > factor) factor = element.amount;
+    catch { //Show Placeholder
+        console.log("No recording found, rendering placeholder");
+        let content = document.getElementById("aim").getElementsByClassName("cardContent")[0];
+        Array.from(content.children).forEach((element) => {
+            element.remove();
         });
+        content.style.display = "grid";
+        content.style.placeItems = "center";
 
-        Array.from(document.getElementsByClassName("dartboardVisual")[0].children).forEach((element) => {
-            element.style.opacity = 0;
-        });
-
-        let out = [];
-        for (let i = 0; i < array.length; i++) {
-            out[i] = {};
-            out[i].notation = array[i].notation;
-            out[i].amount = array[i].amount / factor * 0.85;
-        }
-        return out;
+        let recordingMissingText = document.createElement("h2");
+        recordingMissingText.textContent = "No Recording Found...";
+        content.appendChild(recordingMissingText);
     }
 }

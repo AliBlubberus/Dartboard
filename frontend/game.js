@@ -61,6 +61,7 @@ function addDart(position) {
 
 function endTurn() {
     if (currentPlayerObject.darts) {
+        //If overshot
         if (generateCurrentDartsSum() > playerData[currentPlayer].remainingScore) {
             console.log("Ending Turn (Overshot).");
             currentPlayerObject = [
@@ -83,6 +84,79 @@ function endTurn() {
                 initializeTurn();
             }
         }
+
+        if ((settingsObj.gameEnding == 1 && generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 1) || (settingsObj.gameEnding == 2 && (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 2) || (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 1))) {
+            console.log("Ending Turn (Invalid landing position).");
+            currentPlayerObject = [
+                {"notation": "INVL", "score": 0},
+                {"notation": "INVL", "score": 0},
+                {"notation": "INVL", "score": 0}
+            ];
+            if (currentRoundObject.length < playerData.length - 1) {
+                currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                currentPlayerObject = {};
+                currentPlayer++;
+                initializeTurn();
+            }
+            else {
+                currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                currentPlayerObject = {};
+                gameRecording[gameRecording.length] = currentRoundObject;
+                currentRoundObject = [];
+                currentPlayer = 0;
+                initializeTurn();
+            }
+        }
+
+        //If exactly right for game endings other than straight-out
+        if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore && settingsObj.gameEnding != 0) {
+            if (settingsObj.gameEntry == 1 && currentPlayerObject.darts[currentPlayerObject.darts.length - 1].notation.split("")[0] != "D") {
+                console.log("Ending Turn (Double-Out not satisfied).");
+                currentPlayerObject = [
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0}
+                ];
+                if (currentRoundObject.length < playerData.length - 1) {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    currentPlayer++;
+                    initializeTurn();
+                }
+                else {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    gameRecording[gameRecording.length] = currentRoundObject;
+                    currentRoundObject = [];
+                    currentPlayer = 0;
+                    initializeTurn();
+                }
+            }
+            if (settingsObj.gameEntry == 2 && currentPlayerObject.darts[currentPlayerObject.darts.length - 1].notation.split("")[0] != "T") {
+                console.log("Ending Turn (Triple-Out not satisfied).");
+                currentPlayerObject = [
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0}
+                ];
+                if (currentRoundObject.length < playerData.length - 1) {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    currentPlayer++;
+                    initializeTurn();
+                }
+                else {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    gameRecording[gameRecording.length] = currentRoundObject;
+                    currentRoundObject = [];
+                    currentPlayer = 0;
+                    initializeTurn();
+                }
+            }
+        }
+
+        //If exactly right
         if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore) {
             console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
             playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
@@ -93,6 +167,56 @@ function endTurn() {
             instantiateWinPopup(playerData[winner]);
             return;
         }
+
+        //For game entry other than straight-in
+        if (playerData[currentPlayer].remainingScore == settingsObj.gameLength && settingsObj.gameEntry != 0) {
+            if (settingsObj.gameEntry == 1 && currentPlayerObject.darts[0].notation.split("")[0] != "D") {
+                console.log("Ending Turn (Double-In not satisfied).");
+                currentPlayerObject = [
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0}
+                ];
+                if (currentRoundObject.length < playerData.length - 1) {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    currentPlayer++;
+                    initializeTurn();
+                }
+                else {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    gameRecording[gameRecording.length] = currentRoundObject;
+                    currentRoundObject = [];
+                    currentPlayer = 0;
+                    initializeTurn();
+                }
+            }
+            if (settingsObj.gameEntry == 2 && currentPlayerObject.darts[0].notation.split("")[0] != "T") {
+                console.log("Ending Turn (Triple-In not satisfied).");
+                currentPlayerObject = [
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0},
+                    {"notation": "INVL", "score": 0}
+                ];
+                if (currentRoundObject.length < playerData.length - 1) {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    currentPlayer++;
+                    initializeTurn();
+                }
+                else {
+                    currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+                    currentPlayerObject = {};
+                    gameRecording[gameRecording.length] = currentRoundObject;
+                    currentRoundObject = [];
+                    currentPlayer = 0;
+                    initializeTurn();
+                } 
+            }
+        }
+
+        //Any other case
         if (currentPlayerObject.darts.length == 3) {
             if (currentRoundObject.length < playerData.length - 1) {
                 console.log("Ending Turn (Next Player)");
@@ -194,7 +318,7 @@ function createPlayerListing(object, settings) {
     playerContainer.appendChild(scrollItem);
 
     let profilePic = document.createElement("div");
-    profilePic.setAttribute("class", "playerProfilePicture");
+    profilePic.setAttribute("class", "playerProfilePicture rank" + object.rank);
     scrollItem.appendChild(profilePic);
 
     let nameContainer = document.createElement("div");

@@ -158,6 +158,14 @@ h3{
     box-shadow: inset 30px 0 30px -31px var(--light-blue);
 }
 
+#sidebarSelected .sidebarTextContainer h3 {
+    color: var(--light-blue);
+}
+
+#sidebarSelected .sidebarIcon {
+    fill: var(--light-blue);
+}
+
 .sidebarTextContainer {
     height: 100%;
     flex: 1;
@@ -765,6 +773,9 @@ h3{
 
 .playerSelectPic {
     height: 50px;
+    aspect-ratio: 1 / 1;
+
+    background-size: cover;
     border-radius: 50%;
 }
 

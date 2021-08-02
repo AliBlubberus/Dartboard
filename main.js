@@ -6,6 +6,8 @@ var gameWindow;
 
 var rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
 
+const dashboardTabs = ["frontend/index.htm", "frontend/players.htm"];
+
 app.whenReady().then(() => {
 
     //create a window
@@ -19,9 +21,16 @@ app.whenReady().then(() => {
     });
 
     //load dashboard
-    mainWindow.loadFile("frontend/players.htm");
+    mainWindow.loadFile("frontend/index.htm");
     //mainWindow.setMenu(null);
 });
+
+// Sidebar Tab Transitions //
+ipcMain.on("loadTab", (event, arg) => {
+    mainWindow.loadFile(dashboardTabs[arg]);
+    event.returnValue = null;
+});
+
 
 ipcMain.on("loadPlayerData", (event, arg) => {
     event.returnValue = rawPlayerData;

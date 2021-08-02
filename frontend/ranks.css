@@ -1,0 +1,23 @@
+.rank0 {
+    background-image: url("./rankSprites/0.png");
+}
+
+.rank1 {
+    background-image: url("./rankSprites/1.png");
+}
+
+.rank2 {
+    background-image: url("./rankSprites/2.png");
+}
+
+.rank3 {
+    background-image: url("./rankSprites/3.png");
+}
+
+.rank4 {
+    background-image: url("./rankSprites/4.png");
+}
+
+.rank5 {
+    background-image: url("./rankSprites/5.png");
+}

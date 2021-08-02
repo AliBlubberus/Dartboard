@@ -12,12 +12,15 @@ function addPlayer() {
     let playerName = playerNameInputField.value;
     let singleLetters = playerName.split("");
     if (nameAvailable(playerName) && playerName != "" && singleLetters[0] != " " && singleLetters[singleLetters.length] != " ") {
+        // Template for new players. Change this everytime a new value is added to player data!
         rawPlayerData[rawPlayerData.length] = {
             "name": playerName,
             "gamesPlayed": 0,
             "totalScore": 0,
             "averageScorePerGame": 0,
-            "gamesWon": 0
+            "gamesWon": 0,
+            "exp": 0,
+            "rank": 0
         }
         generatePlayerList();
         ipcRenderer.sendSync("overridePlayerData", rawPlayerData);
@@ -52,7 +55,7 @@ function instantiatePlayerListing(index) {
     listing.appendChild(picContainer);
     
     let pic = document.createElement("div");
-    pic.setAttribute("class", "pic");
+    pic.setAttribute("class", "pic rank" + rawPlayerData[index].rank);
     picContainer.appendChild(pic);
 
     let nameContainer = document.createElement("div");
