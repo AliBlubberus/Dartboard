@@ -22,7 +22,7 @@ We have decided to try some of the many free apps and programs out there that co
  <h2>What I'm currently working on</h2>
  <ul>
   <li>EXP-System</li>
-  <li>"Quests"-Tab<li>
+  <li>"Quests"-Tab</li>
   <li>Ranking System</li>
  </ul>
  
