@@ -1,1 +1,65 @@
-[{"name":"Player uno","gamesPlayed":56,"totalScore":4643,"averageScorePerGame":82.91071428571429,"gamesWon":10,"rank":5},{"name":"Test test allah","gamesPlayed":2,"totalScore":446,"averageScorePerGame":223,"gamesWon":0,"exp":0,"rank":0}]
+[
+  {
+    "name": "Player uno",
+    "gamesPlayed": 78,
+    "totalScore": 6857,
+    "averageScorePerGame": 87.91025641025641,
+    "gamesWon": 30,
+    "rank": 0,
+    "rp": 0,
+    "winstreakRecording": [
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  {
+    "name": "Test test allah",
+    "gamesPlayed": 24,
+    "totalScore": 1725,
+    "averageScorePerGame": 71.875,
+    "gamesWon": 2,
+    "exp": 0,
+    "rank": 0,
+    "rp": 0,
+    "winstreakRecording": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  }
+]

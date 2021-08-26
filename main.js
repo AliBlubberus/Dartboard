@@ -77,6 +77,8 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
         rawPlayerData[index].gamesPlayed++;
         rawPlayerData[index].totalScore += (arg.gameSettings.gameLength - element.remainingScore);
         rawPlayerData[index].averageScorePerGame = (rawPlayerData[index].totalScore / rawPlayerData[index].gamesPlayed);
+        if (rawPlayerData[index].winstreakRecording.length >= 20) rawPlayerData[index].winstreakRecording = [];
+        rawPlayerData[index].winstreakRecording.splice(0, 0, arg.winner.data.name == element.name);
     });
     rawPlayerData[getGlobalPlayerIndexByName(arg.winner.data.name)].gamesWon++;
     gameWindow.close();

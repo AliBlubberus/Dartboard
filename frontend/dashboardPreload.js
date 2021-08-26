@@ -425,8 +425,13 @@ function refreshAimCard(player) {
 
         for (let r = 0; r < latestGame.recording.length; r++) {
             for (let d = 0; d < 3; d++) {
-                let dart = latestGame.recording[r][player].darts[d];
-                addDartToArray(dart);
+                try {
+                    let dart = latestGame.recording[r][player].darts[d];
+                    addDartToArray(dart);
+                }
+                catch (err) {
+                    console.log(err);
+                }
             }
         }
 

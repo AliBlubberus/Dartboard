@@ -20,7 +20,9 @@ function addPlayer() {
             "averageScorePerGame": 0,
             "gamesWon": 0,
             "exp": 0,
-            "rank": 0
+            "rank": 0,
+            //Recording of the latest 20 games
+            "winstreakRecording": []
         }
         generatePlayerList();
         ipcRenderer.sendSync("overridePlayerData", rawPlayerData);

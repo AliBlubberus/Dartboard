@@ -381,7 +381,7 @@ h3{
 }
 
 .summaryLeaderboardRow {
-    flex: 1;
+    height: clamp(50px, 100%, 100px);
     width: 100%;
     display: flex;
     flex-direction: row;
