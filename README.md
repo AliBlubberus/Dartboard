@@ -23,9 +23,11 @@ We have decided to try some of the many free apps and programs out there that co
  <ul>
   <li>EXP-System</li>
   <li>"Quests"-Tab</li>
-  <li>Ranking System</li>
+  <li><del>Ranking System</del></li>
+  <li>Server Backend</li>
  </ul>
  
  <h2>Thank you for checking out my Github!</h2>
  Thank you for checking out this Github repo! It really means a lot to me.
  If you like this project, stick around to see it's development and download the releases once they are out.
+</h2>

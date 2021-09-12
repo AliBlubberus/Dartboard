@@ -496,3 +496,53 @@ function refreshAimCard(player) {
         content.appendChild(recordingMissingText);
     }
 }
+
+
+// Player Notifications
+const notificationContainer = document.getElementById("notificationLayout");
+
+function generatePlayerXpNotification(playerName, spriteID, baseXp, gainedXp) {
+    let card = document.createElement("div");
+    card.setAttribute("class", "notificationCard");
+    notificationContainer.appendChild(card);
+
+    let pic = document.createElement("div");
+    pic.setAttribute("class", "notificationPlayerPic " + spriteID);
+    card.appendChild(pic);
+
+    let contents = document.createElement("div");
+    contents.setAttribute("class", "notificationContents");
+    card.appendChild(contents);
+
+
+    let titleContainer = document.createElement("div");
+    titleContainer.setAttribute("class", "notificationTitleContainer");
+    contents.appendChild(titleContainer);
+
+    let playerTitle = document.createElement("h2");
+    playerTitle.textContent = playerName;
+    titleContainer.appendChild(playerTitle);
+
+    let subtitle = document.createElement("h3");
+    subtitle.textContent = "has gained xp";
+    titleContainer.appendChild(subtitle);
+
+
+    let progressDisplay = document.createElement("div");
+    progressDisplay.setAttribute("class", "notificationProgressContainer");
+    contents.appendChild(progressDisplay);
+
+    let base = document.createElement("p");
+    base.setAttribute("class", "xpNotificationBaseDisplay");
+    base.textContent = baseXp + "xp";
+    progressDisplay.appendChild(base);
+
+    let gain = document.createElement("p");
+    gain.setAttribute("class", "xpNotificationGainDisplay");
+    gain.textContent = "+" + gainedXp + "xp";
+    progressDisplay.appendChild(gain);
+
+    setTimeout(function() {
+        card.remove();
+    }, 10000);
+}

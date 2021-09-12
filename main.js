@@ -81,13 +81,22 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
             rawPlayerData[index].rank = evaluatePlayerRank(rawPlayerData[index].winstreakRecording, rawPlayerData[index].rank);
             rawPlayerData[index].winstreakRecording = [];
         }
-        rawPlayerData[index].winstreakRecording.splice(0, 0, arg.winner.data.name == element.name);
+        let winstreak = rawPlayerData[index].winstreakRecording;
+        if (winstreak) winstreak.splice(0, 0, arg.winner.data.name == element.name);
+        else winstreak = [arg.winner.data.name == element.name];
+        rawPlayerData[index].winstreakRecording = winstreak;
+
+        let acquiredXP = calculateXPforPlayer(arg, element.name);
+        //console.log("generatePlayerXpNotification(" + element.name + ", 'rank" + rawPlayerData[index].rank + "', " + rawPlayerData[index].exp + ", " + rawPlayerData[index].exp + acquiredXP + ")");
+        setTimeout(function() {
+            mainWindow.webContents.executeJavaScript("generatePlayerXpNotification('" + element.name + "', 'rank" + rawPlayerData[index].rank + "', " + rawPlayerData[index].exp + ", " + acquiredXP + ")")
+        }, 3000);
+        rawPlayerData[index].exp += acquiredXP;
     });
     rawPlayerData[getGlobalPlayerIndexByName(arg.winner.data.name)].gamesWon++;
     gameWindow.close();
     overrideLocalPlayerData();
     fs.writeFileSync("./json/latestGame.json", JSON.stringify(arg));
-    mainWindow.webContents.executeJavaScript("updateUI();");
     event.returnValue = null;
 });
 
@@ -121,6 +130,43 @@ function evaluatePlayerRank(winstreakRecording, currentRank) {
     if (timesWon < 5 && currentRank > 0) return currentRank - 1;
     if (timesWon > 15 && currentRank < 5) return currentRank + 1;
     return currentRank;
+}
+
+function calculateXPforPlayer(latestGame, playerName) {
+    let xp = 10;
+
+    //calculate best shot
+    let best = {"name": null, "score": 0};
+    latestGame.recording.forEach((round) => {
+        round.forEach((player) => {
+            player.darts.forEach((dart) => {
+                if (dart.score > best.score) best = {"name": player.name, "score": dart.score};
+            });
+        });
+    });
+    if (best.name == playerName) xp += 50;
+
+    latestGame.playerData.forEach((player) => {
+       if (player.name == playerName) {
+           let averageScoreBonus = 0;
+           if (player.averageScore >= 30 && player.averageScore < 40) averageScoreBonus = 15;
+           if (player.averageScore >= 40 && player.averageScore < 50) averageScoreBonus = 30;
+           if (player.averageScore >= 50) averageScoreBonus = 60;
+
+           let remainingScoreBonus = 0;
+           if (player.remainingScore <= 30 && player.remainingScore > 20) remainingScoreBonus = 10;
+           if (player.remainingScore <= 20 && player.remainingScore > 10) remainingScoreBonus = 20;
+           if (player.remainingScore <= 10 && player.remainingScore > 5) remainingScoreBonus = 30;
+           if (player.remainingScore <= 5) remainingScoreBonus = 50;
+
+           xp += averageScoreBonus + remainingScoreBonus;
+           return;
+       } 
+    });
+
+    if (latestGame.winner.data.name == playerName) xp += 100;
+
+    return xp;
 }
 
 //THESE FUNCTIONS OVERRIDE FILES
