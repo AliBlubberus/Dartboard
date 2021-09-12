@@ -21,10 +21,17 @@ We have decided to try some of the many free apps and programs out there that co
  
  <h2>What I'm currently working on</h2>
  <ul>
-  <li>EXP-System</li>
+  <li><del>EXP-System</del></li>
   <li>"Quests"-Tab</li>
   <li><del>Ranking System</del></li>
   <li>Server Backend</li>
+ </ul>
+ 
+ <h2>What I've planned for the future</h2>
+ <ul>
+  <li>Different Themed Profile Pictures loaded from Backend</li>
+  <li>Server-Side Quests</li>
+  <li>About, Support Creator and Settings Tabs</li>
  </ul>
  
  <h2>Thank you for checking out my Github!</h2>
