@@ -425,34 +425,33 @@ function refreshAimCard(player) {
 
         for (let r = 0; r < latestGame.recording.length; r++) {
             for (let d = 0; d < 3; d++) {
-                try {
+                if (latestGame.recording[r][player] && latestGame.recording[r][player].darts && latestGame.recording[r][player].darts[d]) {
                     let dart = latestGame.recording[r][player].darts[d];
                     addDartToArray(dart);
-                }
-                catch (err) {
-                    console.log(err);
                 }
             }
         }
 
         function addDartToArray(item) {
-            let existing = false;
-            dartFields.forEach((element) => {
-                if (element.notation == item.notation) existing = true;
-            });
+            if (item && item.notation) {
+                let existing = false;
+                dartFields.forEach((element) => {
+                    if (element.notation == item.notation) existing = true;
+                });
 
-            if (!existing) {
-                dartFields[dartFields.length] = {
-                    "notation": item.notation,
-                    "amount": 1
+                if (!existing) {
+                    dartFields[dartFields.length] = {
+                        "notation": item.notation,
+                        "amount": 1
+                    }
                 }
-            }
-            else {
-                let index;
-                for (let i = 0; i < dartFields.length; i++) {
-                    if (item.notation == dartFields[i].notation) index = i;
+                else {
+                    let index;
+                    for (let i = 0; i < dartFields.length; i++) {
+                        if (item.notation == dartFields[i].notation) index = i;
+                    }
+                    dartFields[index].amount++;
                 }
-                dartFields[index].amount++;
             }
         }
 
@@ -460,7 +459,10 @@ function refreshAimCard(player) {
 
         let normalizedDartFields = normalizeDartArray(dartFields);
         normalizedDartFields.forEach((element) => {
-            document.getElementById(element.notation).style.opacity = element.amount;
+            if (element.notation) {
+                let DOMelement = document.getElementById(element.notation);
+                if (DOMelement) DOMelement.style.opacity = element.amount;
+            }
         });
 
         function normalizeDartArray(array) {
@@ -482,8 +484,9 @@ function refreshAimCard(player) {
             return out;
         }
     }
-    catch { //Show Placeholder
+    catch (err) { //Show Placeholder
         console.log("No recording found, rendering placeholder");
+        console.error(err)
         let content = document.getElementById("aim").getElementsByClassName("cardContent")[0];
         Array.from(content.children).forEach((element) => {
             element.remove();
@@ -501,10 +504,11 @@ function refreshAimCard(player) {
 // Player Notifications
 const notificationContainer = document.getElementById("notificationLayout");
 
-function generatePlayerXpNotification(playerName, spriteID, baseXp, gainedXp) {
+function generatePlayerXpNotification(playerName, spriteID, baseXp, gainedXp, animationDelay) {
     let card = document.createElement("div");
     card.setAttribute("class", "notificationCard");
     notificationContainer.appendChild(card);
+    card.style.animationDelay = animationDelay + "s";
 
     let pic = document.createElement("div");
     pic.setAttribute("class", "notificationPlayerPic " + spriteID);

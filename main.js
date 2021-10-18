@@ -6,7 +6,7 @@ var gameWindow;
 
 var rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
 
-const dashboardTabs = ["frontend/index.htm", "frontend/players.htm"];
+const dashboardTabs = ["frontend/index.htm", "frontend/players.htm", "frontend/about.htm"];
 
 app.whenReady().then(() => {
 
@@ -21,7 +21,7 @@ app.whenReady().then(() => {
     });
 
     //load dashboard
-    mainWindow.loadFile("frontend/index.htm");
+    mainWindow.loadFile("frontend/about.htm");
     //mainWindow.setMenu(null);
 });
 
@@ -72,7 +72,8 @@ ipcMain.on("startNewGame", (event, arg) => {
 });
 
 ipcMain.on("handleFinishedGame", (event, arg) => {
-    arg.playerData.forEach((element) => {
+    for (let i = 0; i < arg.playerData.length; i++) {
+        let element = arg.playerData[i];
         let index = getGlobalPlayerIndexByName(element.name);
         rawPlayerData[index].gamesPlayed++;
         rawPlayerData[index].totalScore += (arg.gameSettings.gameLength - element.remainingScore);
@@ -89,10 +90,10 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
         let acquiredXP = calculateXPforPlayer(arg, element.name);
         //console.log("generatePlayerXpNotification(" + element.name + ", 'rank" + rawPlayerData[index].rank + "', " + rawPlayerData[index].exp + ", " + rawPlayerData[index].exp + acquiredXP + ")");
         setTimeout(function() {
-            mainWindow.webContents.executeJavaScript("generatePlayerXpNotification('" + element.name + "', 'rank" + rawPlayerData[index].rank + "', " + rawPlayerData[index].exp + ", " + acquiredXP + ")")
+            mainWindow.webContents.executeJavaScript("generatePlayerXpNotification('" + element.name + "', 'rank" + rawPlayerData[index].rank + "', " + rawPlayerData[index].exp + ", " + acquiredXP + ")", i / 2)
         }, 3000);
         rawPlayerData[index].exp += acquiredXP;
-    });
+    };
     rawPlayerData[getGlobalPlayerIndexByName(arg.winner.data.name)].gamesWon++;
     gameWindow.close();
     overrideLocalPlayerData();
@@ -139,6 +140,7 @@ function calculateXPforPlayer(latestGame, playerName) {
     let best = {"name": null, "score": 0};
     latestGame.recording.forEach((round) => {
         round.forEach((player) => {
+            if (player.darts)
             player.darts.forEach((dart) => {
                 if (dart.score > best.score) best = {"name": player.name, "score": dart.score};
             });

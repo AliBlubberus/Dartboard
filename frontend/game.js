@@ -85,9 +85,9 @@ function endTurn() {
             }
         }
 
-        if ((settingsObj.gameEnding == 1 && generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 1) || (settingsObj.gameEnding == 2 && (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 2) || (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 1))) {
+        if (settingsObj.gameEnding != 0 && ((settingsObj.gameEnding == 1 && generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 1) || (settingsObj.gameEnding == 2 && (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 2) || (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore - 1)))) {
             console.log("Ending Turn (Invalid landing position).");
-            currentPlayerObject = [
+            currentPlayerObject.darts = [
                 {"notation": "INVL", "score": 0},
                 {"notation": "INVL", "score": 0},
                 {"notation": "INVL", "score": 0}
@@ -106,13 +106,15 @@ function endTurn() {
                 currentPlayer = 0;
                 initializeTurn();
             }
+            updateUI();
+            return;
         }
 
         //If exactly right for game endings other than straight-out
         if (generateCurrentDartsSum() == playerData[currentPlayer].remainingScore && settingsObj.gameEnding != 0) {
-            if (settingsObj.gameEntry == 1 && currentPlayerObject.darts[currentPlayerObject.darts.length - 1].notation.split("")[0] != "D") {
+            if (settingsObj.gameEnding != 0 && (settingsObj.gameEnding == 1 && (currentPlayerObject.darts[currentPlayerObject.darts.length - 1].notation.split("")[0] != "D"))) {
                 console.log("Ending Turn (Double-Out not satisfied).");
-                currentPlayerObject = [
+                currentPlayerObject.darts = [
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0}
@@ -132,9 +134,9 @@ function endTurn() {
                     initializeTurn();
                 }
             }
-            if (settingsObj.gameEntry == 2 && currentPlayerObject.darts[currentPlayerObject.darts.length - 1].notation.split("")[0] != "T") {
+            else if (settingsObj.gameEnding != 0 && (settingsObj.gameEnding == 2 && (currentPlayerObject.darts[currentPlayerObject.darts.length - 1].notation.split("")[0] != "T"))) {
                 console.log("Ending Turn (Triple-Out not satisfied).");
-                currentPlayerObject = [
+                currentPlayerObject.darts = [
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0}
@@ -161,6 +163,7 @@ function endTurn() {
             console.log("Ending Turn (Player " + playerData[currentPlayer].name + " won).");
             playerData[currentPlayer].remainingScore -= generateCurrentDartsSum();
             currentRoundObject[currentRoundObject.length] = currentPlayerObject;
+            gameRecording[gameRecording.length] = currentRoundObject;
 
             // win logic //
             winner = currentPlayer;
@@ -172,7 +175,7 @@ function endTurn() {
         if (playerData[currentPlayer].remainingScore == settingsObj.gameLength && settingsObj.gameEntry != 0) {
             if (settingsObj.gameEntry == 1 && currentPlayerObject.darts[0].notation.split("")[0] != "D") {
                 console.log("Ending Turn (Double-In not satisfied).");
-                currentPlayerObject = [
+                currentPlayerObject.darts = [
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0}
@@ -194,7 +197,7 @@ function endTurn() {
             }
             if (settingsObj.gameEntry == 2 && currentPlayerObject.darts[0].notation.split("")[0] != "T") {
                 console.log("Ending Turn (Triple-In not satisfied).");
-                currentPlayerObject = [
+                currentPlayerObject.darts = [
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0},
                     {"notation": "INVL", "score": 0}
