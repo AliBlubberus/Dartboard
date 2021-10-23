@@ -1,6 +1,8 @@
 const {app, BrowserWindow, ipcMain, ipcRenderer} = require("electron");
 const fs = require("fs");
 
+delete require('electron').nativeImage.createThumbnailFromPath
+
 var mainWindow;
 var gameWindow;
 
