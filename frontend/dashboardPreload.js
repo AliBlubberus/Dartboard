@@ -1,4 +1,4 @@
-const { ipcRenderer, Debugger, ipcMain } = require("electron");
+const { ipcRenderer, Debugger, ipcMain, desktopCapturer } = require("electron");
 
 const diagramSVG = document.getElementById("gameSummaryDiagram");
 const ns = "http://www.w3.org/2000/svg";
@@ -549,4 +549,80 @@ function generatePlayerXpNotification(playerName, spriteID, baseXp, gainedXp, an
     setTimeout(function() {
         card.remove();
     }, 10000);
+}
+
+
+// Intro
+
+function highlightElement(element) {
+    if (!element) {
+        document.getElementsByClassName("elementHighlightBackdrop")[0].remove();
+        return;
+    }
+
+    let previous = document.getElementsByClassName("highlighted")[0];
+
+    if (previous) {
+        let list = [];
+        previous.classList.forEach((tag) => {
+            if (tag != "highlighted") list.push(tag);
+        });
+        previous.setAttribute("class", list.join(" "));
+    }
+    else {
+        let backdrop = document.createElement("div");
+        backdrop.setAttribute("class", "elementHighlightBackdrop");
+        document.body.appendChild(backdrop);
+    }
+    element.setAttribute("class", element.className + " highlighted");
+}
+
+function initializeGameIntro() {
+
+}
+
+function spawnGameIntroPrompt() {
+    let container = document.createElement("div");
+    container.setAttribute("class", "gameIntroPrompContainer");
+    document.body.appendChild(container);
+
+    let popup = document.createElement("div");
+    popup.setAttribute("class", "gameIntroPrompt");
+    container.appendChild(popup);
+
+    let titleContainer = document.createElement("div");
+    titleContainer.setAttribute("class", "gameIntroPromptTitle");
+    popup.appendChild(titleContainer);
+
+    let title = document.createElement("h2");
+    title.textContent = "Welcome!";
+    titleContainer.appendChild(title);
+
+    let paragraphContainer = document.createElement("div");
+    paragraphContainer.setAttribute("class", "gameIntroPromptParagraph");
+    popup.appendChild(paragraphContainer);
+
+    let paragraph = document.createElement("p");
+    paragraph.textContent = "It looks like you're here for the first time. Would you like to have a brief introduction?";
+    paragraphContainer.appendChild(paragraph);
+
+    let buttonContainer = document.createElement("div");
+    buttonContainer.setAttribute("class", "gameIntroPromptButtonContainer");
+    popup.appendChild(buttonContainer);
+
+    let declineButton = document.createElement("div");
+    declineButton.setAttribute("class", "gameIntroPromptButton");
+    buttonContainer.appendChild(declineButton);
+
+    let declineText = document.createElement("h2");
+    declineText.textContent = "No, thanks!";
+    declineButton.appendChild(declineText);
+
+    let acceptButton = document.createElement("div");
+    acceptButton.setAttribute("class", "gameIntroPromptButton");
+    buttonContainer.appendChild(acceptButton);
+
+    let acceptText = document.createElement("h2");
+    acceptText.textContent = "Sure";
+    acceptButton.appendChild(acceptText);
 }

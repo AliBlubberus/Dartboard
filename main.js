@@ -4,9 +4,19 @@ const fs = require("fs");
 var mainWindow;
 var gameWindow;
 
-var rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+//Load Player Data
+var rawPlayerData;
 
-const dashboardTabs = ["frontend/index.htm", "frontend/players.htm", "frontend/about.htm"];
+try {
+    rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+}
+catch (err) {
+    console.error(err);
+    fs.writeFileSync("./json/players.json", "[]");
+    rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+}
+
+const dashboardTabs = ["frontend/index.htm", "frontend/players.htm", "frontend/about.htm", "frontend/supportCreator.htm"];
 
 app.whenReady().then(() => {
 
@@ -21,7 +31,7 @@ app.whenReady().then(() => {
     });
 
     //load dashboard
-    mainWindow.loadFile("frontend/about.htm");
+    mainWindow.loadFile("frontend/index.htm");
     //mainWindow.setMenu(null);
 });
 
@@ -37,7 +47,14 @@ ipcMain.on("loadPlayerData", (event, arg) => {
 });
 
 ipcMain.on("loadLatestGame", (event, arg) => {
-    event.returnValue = JSON.parse(fs.readFileSync("./json/latestGame.json"));
+    let file;
+    try {
+        file = JSON.parse(fs.readFileSync("./json/latestGame.json"));
+    }
+    catch {
+        file = null;
+    }
+    event.returnValue = file;
 });
 
 ipcMain.on("deleteLatestGame", (event, arg) => {
