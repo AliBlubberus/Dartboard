@@ -6,7 +6,24 @@ var rawPlayerData = ipcRenderer.sendSync("loadPlayerData");
 const playerNameInputField = document.getElementById("playerNameField");
 const playerListObj = document.getElementById("playersList");
 
+var playerListings = [];
+var selectedPlayer = 0;
+
+const statDisplay = {
+    playerName: document.getElementById("playerName"),
+    gamesPlayed: document.getElementById("gamesPlayed"),
+    totalScore: document.getElementById("totalScore"),
+    averageScore: document.getElementById("averageScore"),
+    gamesWon: document.getElementById("gamesWon"),
+    exp: document.getElementById("exp"),
+    rank: document.getElementById("rank")
+}
+const edit = document.getElementById("editBtn");
+const del = document.getElementById("deleteBtn");
+
 generatePlayerList();
+
+selectPlayer(0);
 
 function addPlayer() {
     let playerName = playerNameInputField.value;
@@ -41,11 +58,13 @@ function clearPlayersList() {
     Array.from(document.getElementById("playersList").children).forEach((element) => {
         element.remove();
     });
+    playerListings = [];
 }
 
 function instantiatePlayerListing(index) {
     let listingContainer = document.createElement("div");
     listingContainer.setAttribute("class", "playerListingContainer");
+    listingContainer.setAttribute("onclick", "selectPlayer(" + index + ")");
     playerListObj.appendChild(listingContainer);
 
     let listing = document.createElement("div");
@@ -68,44 +87,44 @@ function instantiatePlayerListing(index) {
     nameText.textContent = rawPlayerData[index].name;
     nameContainer.appendChild(nameText);
 
-    let actionsContainer = document.createElement("div");
-    actionsContainer.setAttribute("class", "actionsContainer");
-    listing.appendChild(actionsContainer);
-
-    let editButton = document.createElement("div");
-    editButton.setAttribute("class", "editPlayerButton");
-    editButton.setAttribute("onclick", "instantiateRenamePopup(" + index + ")");
-    actionsContainer.appendChild(editButton);
-
-    let editIcon = document.createElementNS(ns, "svg");
-    editIcon.setAttributeNS(null, "class", "playerActionBtnSvg");
-    editIcon.setAttributeNS(null, "viewBox", "0 0 512 512");
-    editButton.appendChild(editIcon);
-
-    let editIconPath = document.createElementNS(ns, "path");
-    editIconPath.setAttributeNS(null, "d", "M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z");
-    editIcon.appendChild(editIconPath);
-
-    let deleteButton = document.createElement("div");
-    deleteButton.setAttribute("class", "deletePlayerButton");
-    deleteButton.setAttribute("onclick", "instantiateDeletionPopup(" + index + ")");
-    actionsContainer.appendChild(deleteButton);
-
-    let deleteIcon = document.createElementNS(ns, "svg");
-    deleteIcon.setAttributeNS(null, "class", "playerActionBtnSvg");
-    deleteIcon.setAttributeNS(null, "viewBox", "0 0 448 512");
-    deleteButton.appendChild(deleteIcon);
-
-    let deleteIconPath = document.createElementNS(ns, "path");
-    deleteIconPath.setAttributeNS(null, "d", "M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z");
-    deleteIcon.appendChild(deleteIconPath);
+    return listing;
 }
 
 function generatePlayerList() {
     clearPlayersList();
     for (let i = 0; i < rawPlayerData.length; i++) {
-        instantiatePlayerListing(i);
+        playerListings[i] = instantiatePlayerListing(i);
     }
+    selectPlayer(selectedPlayer);
+}
+
+function selectPlayer(index) {
+    // Un-Highlight previous highlighted element
+    let previous = document.getElementsByClassName("playerListingSelected")[0];
+    if (previous) {
+        let list = [];
+        previous.classList.forEach((tag) => {
+            if (tag != "playerListingSelected") list.push(tag);
+        });
+        previous.setAttribute("class", list.join(" "));
+    }
+
+    //Highlight New Element
+    playerListings[index].setAttribute("class", playerListings[index].className + " playerListingSelected");
+    selectedPlayer = index;
+
+    //Update Stats Display
+    statDisplay.playerName.textContent = rawPlayerData[index].name;
+    statDisplay.averageScore.textContent = "Average Score: " + rawPlayerData[index].averageScorePerGame;
+    statDisplay.exp.textContent = "Exp: " + rawPlayerData[index].exp;
+    statDisplay.gamesPlayed.textContent = "Games Played: " + rawPlayerData[index].gamesPlayed;
+    statDisplay.gamesWon.textContent = "Games Won: " + rawPlayerData[index].gamesWon;
+    statDisplay.rank.textContent = "Rank: " + rawPlayerData[index].rank;
+    statDisplay.totalScore.textContent = "Total Score: " + rawPlayerData[index].totalScore;
+
+    //Update onClick events on Action Buttons
+    edit.setAttribute("onclick", "instantiateRenamePopup(" + index + ")");
+    del.setAttribute("onclick", "instantiateDeletionPopup(" + index + ")");
 }
 
 function instantiateDeletionPopup(playerID) {
@@ -131,7 +150,7 @@ function instantiateDeletionPopup(playerID) {
     window.appendChild(paragraphContainer);
 
     let paragraph = document.createElement("p");
-    paragraph.textContent = "You are about to permanently delete '" + rawPlayerData[playerID].name + "' and all files associated with them. This is irreversible! Do you widh to proceed?";
+    paragraph.textContent = "You are about to permanently delete '" + rawPlayerData[playerID].name + "' and all files associated with them. This is irreversible! Do you wish to proceed?";
     paragraphContainer.appendChild(paragraph);
 
     let buttonsContainer = document.createElement("div");

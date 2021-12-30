@@ -88,42 +88,49 @@
                 <div class="cardTitleContainer"><h1>Players</h1></div>
                 <div class="cardContent" id="playerCardLeftColumn">
                     <div class="playersList" id="playersList">
-                        <!-- Place Player Listings Here -->
-                        <!--
-                        <div class="playerListingContainer">
-                            <div class="playerListing">
-                                <div class="picContainer"><div class="pic"></div></div>
-                                <div class="nameContainer"><h2>PlayerName</h2></div>
-                                <div class="actionsContainer">
-                                    <div class="editPlayerButton">
-                                        <svg class="playerActionBtnSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="deletePlayerButton">
-                                        <svg class="playerActionBtnSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                            <path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path>
-                                        </svg>
-                                    </div>
-                                </div>
+                        
+                    </div>
+                    <div class="newPlayerUI">
+                        <div class="playerNameFieldContainer">
+                            <input type="text" placeholder="Player Name" id="playerNameField">
+                        </div>
+                        <div class="addPlayerButtonContainer">
+                            <div class="addPlayerButton" onclick="addPlayer()">
+                                <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                                </svg>
                             </div>
                         </div>
-                        -->
                     </div>
                 </div>
             </div>
 
             <!-- Card Right Column -->
             <div class="mainCardColumn">
-                <div class="columnHalf">
-                    <div class="cardTitleContainer"><h1>New Player</h1></div>
-                    <div class="cardContent" id="playerCardRightColumn">
-                        <!-- New Player UI -->
-                        <div class="playerNameFieldContainer">
-                            <input type="text" placeholder="Player Name" id="playerNameField">
+                <div class="cardTitleContainer"><h1>Player Stats</h1></div>
+                <div class="cardContent" id="playerCardRightColumn">
+                    <div class="playerNameContainer">
+                        <h2 id="playerName">Player Name</h2>
+                    </div>
+                    <div class="statsContainer">
+                        <h3 id="gamesPlayed">Games Played: 0</h3>
+                        <h3 id="totalScore">Total Score: 0</h3>
+                        <h3 id="averageScore">Average Score Per Game: 0</h3>
+                        <h3 id="gamesWon">Games Won: 0</h3>
+                        <h3 id="exp">Exp: 0</h3>
+                        <h3 id="rank">Rank: 0</h3>
+                    </div>
+                    <div class="actionButtonsContainer">
+                        <div class="editPlayerButton" id="editBtn">
+                            <svg class="playerActionBtnSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path>
+                            </svg>
                         </div>
-                        <div class="addPlayerButtonContainer">
-                            <div class="addPlayerButton" onclick="addPlayer()"><h2>Add Player</h2></div>
+
+                        <div class="deletePlayerButton" id="deleteBtn">
+                            <svg class="playerActionBtnSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path>
+                            </svg>
                         </div>
                     </div>
                 </div>

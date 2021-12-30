@@ -9,13 +9,15 @@ var gameWindow;
 //Load Player Data
 var rawPlayerData;
 
-try {
-    rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
-}
-catch (err) {
-    console.error(err);
-    fs.writeFileSync("./json/players.json", "[]");
-    rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+function reloadPlayerData() {
+    try {
+        rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+    }
+    catch (err) {
+        console.error(err);
+        fs.writeFileSync("./json/players.json", "[]");
+        rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+    }
 }
 
 const dashboardTabs = ["frontend/index.htm", "frontend/players.htm", "frontend/about.htm", "frontend/supportCreator.htm"];
@@ -45,6 +47,7 @@ ipcMain.on("loadTab", (event, arg) => {
 
 
 ipcMain.on("loadPlayerData", (event, arg) => {
+    reloadPlayerData();
     event.returnValue = rawPlayerData;
 });
 
@@ -101,7 +104,11 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
             rawPlayerData[index].rank = evaluatePlayerRank(rawPlayerData[index].winstreakRecording, rawPlayerData[index].rank);
             rawPlayerData[index].winstreakRecording = [];
         }
+
         let winstreak = rawPlayerData[index].winstreakRecording;
+
+        if (!Array.isArray(winstreak)) winstreak = [winstreak]; //Convert to array if necessary
+
         if (winstreak) winstreak.splice(0, 0, arg.winner.data.name == element.name);
         else winstreak = [arg.winner.data.name == element.name];
         rawPlayerData[index].winstreakRecording = winstreak;
