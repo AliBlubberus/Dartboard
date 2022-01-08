@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain, ipcRenderer} = require("electron");
 const fs = require("fs");
 
-delete require('electron').nativeImage.createThumbnailFromPath
+delete require('electron').nativeImage.createThumbnailFromPath; //For safety reasons
 
 var mainWindow;
 var gameWindow;
@@ -36,8 +36,10 @@ app.whenReady().then(() => {
 
     //load dashboard
     mainWindow.loadFile("frontend/index.htm");
+    mainWindow.webContents.on("did-finish-load", downloadPatch(mainWindow));
     //mainWindow.setMenu(null);
 });
+
 
 // Sidebar Tab Transitions //
 ipcMain.on("loadTab", (event, arg) => {
@@ -196,6 +198,52 @@ function calculateXPforPlayer(latestGame, playerName) {
 
     return xp;
 }
+
+
+//       ###########
+//    ###           ###
+//  ##    #########    ##   SERVER
+//      ##         ##         CONNECTIVITY
+//     #    #####    #
+//        ##     ##
+//            0
+
+async function downloadPatch(window) {
+    
+    window.webContents.executeJavaScript("expandPopup();");
+
+    let patch = testAsyncFailAfter5Secs();
+    patch
+        .then(result => {
+
+        })
+        .catch(err => {
+            window.webContents.executeJavaScript("loadingFailed('" + err + "')");
+        })
+        .finally(() => {
+            setTimeout(() => {window.webContents.executeJavaScript("collapsePopup()")}, 3000);
+        });
+}
+
+function fetchPatchStruct() {
+    return new Promise((resolve, reject) => {
+        //TODO: Literally everything
+    });
+}
+
+function testAsyncFailAfter5Secs() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {reject("damn")}, 5000);
+    });
+}
+
+function testAsyncSuccessAfter5Secs() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {resolve()}, 5000);
+    });
+}
+
+
 
 //THESE FUNCTIONS OVERRIDE FILES
 //USE WITH CAUTION

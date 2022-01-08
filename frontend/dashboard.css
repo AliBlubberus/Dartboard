@@ -1076,3 +1076,103 @@ h3{
 .gameIntroPromptButton:first-child h2 {
     color: var(--light-red);
 }
+
+.subtitleContainer {
+    z-index: 10010;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 20vh;
+
+    display: grid;
+    place-items: center;
+}
+
+.subtitleContainer p {
+    z-index: 10011;
+
+    color: var(--white);
+    font-size: 2rem;
+    width: 80%;
+    text-align: center;
+}
+
+
+/* Server Connection Popup */
+
+.serverConnectionPopupContainer {
+    position: fixed;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+}
+
+.serverConnectionPopup {
+    z-index: 20000;
+
+    margin-top: 15px;
+
+    transform: translateY(calc(-100% - 15%));
+
+    width: 500px;
+    height: 100px;
+
+    background-color: var(--card-background);
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+
+    border-bottom: 3px solid var(--white);
+    box-shadow: inset 0 -30px 30px -31px var(--white);
+
+    display: flex;
+
+    transition: transform 0.5s;
+}
+
+.serverConnectionPopup-expanded {
+    transform: translateY(0);
+}
+
+.textContainer {
+    height: 100%;
+    flex: 5;
+
+    display: grid;
+    place-items: center;
+}
+
+.textContainer h2 {
+    font-size: 1rem;
+}
+
+.loadingSVGContainer {
+    height: 100%;
+    flex: 1;
+}
+
+.offlineSVG {
+    position: fixed;
+
+    height: 50px;
+    aspect-ratio: 1 / 1;
+
+    bottom: 0;
+    right: 0;
+
+    display: grid;
+    place-items: center;
+
+    opacity: 0;
+}
+
+.offlineSVG_Enabled {
+    opacity: 1;
+}
+
+.offlineSVG svg {
+    width: 75%;
+    height: 75%;
+
+    fill: var(--red);
+}

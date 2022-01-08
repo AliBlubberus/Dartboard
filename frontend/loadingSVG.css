@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    user-select: none;
+}
+
+:root {
+    /* Colors */
+    --dark-blue: #10555B;
+    --blue: #136E73;
+    --light-blue: #79BFB2;
+    --light-red: #F9A88E;
+    --red: #E9665D;
+
+    --dark-gray: #293C42;
+    --gray: #858D8F;
+    --white: #ECECEE;
+    --blue-black: #020B26;
+    --black: #090910;
+
+    --sidebar-background: #000010aa;
+    --card-background: #00001050;
+    --card-background-light: #ECECEE50;
+
+    --dark-grey-transparent: #293C42aa;
+    --blue-black-transparent: #020B26aa;
+    --light-red-transparent: #F9A88Eaa;
+    --red-transparent: #E9665Daa;
+    --light-blue-transparent: #79BFB2aa;
+    --blue-transparent: #136E73aa;
+
+    --player-one: #FF4631;
+    --player-two: #FF7F2E;
+    --player-three: #FEBA2B;
+    --player-four: #1BB778;
+    --player-five: #2F5DFB;
+    --player-six: #1A5173;
+    --player-seven: #3CA661;
+    --player-eight: #F2C230;
+    --player-nine: #F28A80;
+    --player-ten: #BF3030;
+
+    /* Font Settings */
+    font-family: 'Varela Round', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: var(--black);
+
+    display: grid;
+    place-items: center;
+}
+
+.loadingSVGContainer {
+    width: 300px;
+    aspect-ratio: 1 / 1;
+
+    display: grid;
+    place-items: center;
+}
+
+.loadingSVGContainer svg {
+    height: 90%;
+    aspect-ratio: 1 / 1;
+}
+
+.loadingSVGContainer svg path {
+    transform-origin: center center;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+
+    transition: fill 0.5s, transform 0.5s;
+}
+
+.loading_OuterCircle {
+    fill: var(--blue-transparent);
+    animation-name: loading_OuterCircle;
+}
+
+.loading_InnerCircle {
+    fill: var(--blue-transparent);
+    animation-name: loading_InnerCircle;
+}
+
+.loading_Dart {
+    fill: var(--light-blue-transparent);
+    animation-name: loading_Dart;
+}
+
+.loading_Failed {
+    fill: var(--red-transparent);
+    animation-name: none;
+    transform: scale(0.75);
+}
+
+@keyframes loading_InnerCircle {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(0.75);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(0.75);
+    }
+    80% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+@keyframes loading_OuterCircle {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    20% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(0.75);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(.75);
+    }
+    90% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+@keyframes loading_Dart {
+    from {
+        opacity: 0;
+        transform: scale(1);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(0.75);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(0.75);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}

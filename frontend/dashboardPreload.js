@@ -13,6 +13,10 @@ const playerSelectList = document.getElementById("playerSelectList");
 const totalScoreListContainer = document.getElementById("totalScoreList");
 const averageScoreListContainer = document.getElementById("averageScoreList");
 
+const popup = document.getElementsByClassName("serverConnectionPopup")[0];
+const loadingSVGs = popup.getElementsByTagName("path");
+const loadingText = popup.getElementsByTagName("h2")[0];
+
 var gameRunning = false;
 
 playerData.forEach(element => {
@@ -552,9 +556,52 @@ function generatePlayerXpNotification(playerName, spriteID, baseXp, gainedXp, an
 }
 
 
+// Server Connection Popup
+
+function expandPopup() {
+    popup.classList.add("serverConnectionPopup-expanded");
+}
+
+function collapsePopup() {
+    popup.classList.remove("serverConnectionPopup-expanded");
+}
+
+function loadingFailed(err) {
+    Array.from(loadingSVGs).forEach((element) => {
+        element.classList.add("loading_Failed");
+    });
+    loadingText.textContent = err;
+}
+
+
 // Intro
 
-function highlightElement(element) {
+function highlightElement(element, subtitle) {
+
+    if (!subtitle) {
+        try {
+            document.getElementsByClassName("subtitleContainer")[0].remove();
+        }
+        catch {
+            
+        }
+    }
+    else {
+        try {
+            document.getElementsByClassName("subtitleContainer")[0]
+            .getElementsByTagName("p").textContent = subtitle;
+        }
+        catch {
+            let container = document.createElement("div");
+            container.setAttribute("class", "subtitleContainer");
+            document.body.appendChild(container);
+            
+            let paragraph = document.createElement("p");
+            container.appendChild(paragraph);
+            paragraph.textContent = subtitle;
+        }
+    }
+
     if (!element) {
         document.getElementsByClassName("elementHighlightBackdrop")[0].remove();
         return;
@@ -574,6 +621,7 @@ function highlightElement(element) {
         backdrop.setAttribute("class", "elementHighlightBackdrop");
         document.body.appendChild(backdrop);
     }
+    
     element.setAttribute("class", element.className + " highlighted");
 }
 
