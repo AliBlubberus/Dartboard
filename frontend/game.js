@@ -271,7 +271,7 @@ function getTotalDarts(player) {
         let dartsCurrentRound = 0;
 
         darts = gameRecording.length * 3;
-        if (currentRoundObject.length > player) dartsCurrentRound = currentRoundObject[player].darts.length;
+        if (currentRoundObject.length > player && currentRoundObject[player].darts) dartsCurrentRound = currentRoundObject[player].darts.length;
 
         return darts + dartsCurrentRound;
     }
