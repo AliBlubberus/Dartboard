@@ -354,6 +354,8 @@ h3 {
 
     display: flex;
     flex-direction: row;
+    
+    cursor: pointer;
 }
 
 .playerListingSelected {

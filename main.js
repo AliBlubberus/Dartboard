@@ -1,10 +1,14 @@
 const {app, BrowserWindow, ipcMain, ipcRenderer} = require("electron");
 const fs = require("fs");
+const http = require("http");
 
 delete require('electron').nativeImage.createThumbnailFromPath; //For safety reasons
 
 var mainWindow;
 var gameWindow;
+
+const serverURL = "localhost";
+const serverPort = 3000;
 
 //Load Player Data
 var rawPlayerData;
@@ -36,7 +40,7 @@ app.whenReady().then(() => {
 
     //load dashboard
     mainWindow.loadFile("frontend/index.htm");
-    mainWindow.webContents.on("did-finish-load", downloadPatch(mainWindow));
+    //mainWindow.webContents.on("did-finish-load", downloadPatch(mainWindow));
     //mainWindow.setMenu(null);
 });
 
@@ -212,10 +216,10 @@ async function downloadPatch(window) {
     
     window.webContents.executeJavaScript("expandPopup();");
 
-    let patch = testAsyncFailAfter5Secs();
+    let patch = fetchPatchStruct();
     patch
         .then(result => {
-
+            console.log(result);
         })
         .catch(err => {
             window.webContents.executeJavaScript("loadingFailed('" + err + "')");
@@ -227,13 +231,27 @@ async function downloadPatch(window) {
 
 function fetchPatchStruct() {
     return new Promise((resolve, reject) => {
-        //TODO: Literally everything
+        let options = {
+            hostname: serverURL,
+            port: serverPort,
+            path: "/patch.json",
+            method: "GET"
+        };
+        let patchReq = http.request(options, res => {
+            res.on("data", d => {
+                resolve(d);
+            });
+        });
+        patchReq.on("error", err => {
+            reject(err);
+        });
+        patchReq.end();
     });
 }
 
 function testAsyncFailAfter5Secs() {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {reject("damn")}, 5000);
+        setTimeout(() => {reject("damn")}, 10000);
     });
 }
 

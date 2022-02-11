@@ -17,7 +17,6 @@ var mime = {
 };
 
 const server = http.createServer(function (req, res) {
-    console.log(req);
     var reqpath = req.url.toString().split('?')[0]
     if (req.method !== 'GET') {
         res.statusCode = 501
