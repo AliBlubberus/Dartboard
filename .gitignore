@@ -1,3 +1,4 @@
 /node_modules
 /Dartboard-win32-x64.zip
-/json
+/json/latestGame.json
+/json/players.json
