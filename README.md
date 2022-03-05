@@ -1,6 +1,8 @@
 <h1>Release V1.0 is out!!!</h1>
 <h3>The first release of Dartboard is out! <br> Download it by clicking <a href="https://github.com/AliBlubberus/Dartboard/releases/download/Release_v1.0/Dartboard.msi">here</a>.</h3>
 
+<hr>
+
 <h1>Dartboard</h1>
 
 Dartboard is an app which helps you record your games of darts.
