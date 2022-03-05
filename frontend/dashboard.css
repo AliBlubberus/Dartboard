@@ -845,12 +845,18 @@ h3{
     }
     90% {
         transform: translateX(0);
+        border-bottom-color: var(--blue);
+        box-shadow: inset 0 -30px 30px -31px var(--blue);
     }
     95% {
         transform: translateX(-10%);
+        border-bottom-color: var(--blue);
+        box-shadow: inset 0 -30px 30px -31px var(--blue);
     }
     to {
         transform: translateX(110%);
+        border-bottom-color: var(--blue);
+        box-shadow: inset 0 -30px 30px -31px var(--blue);
     }
 }
 
