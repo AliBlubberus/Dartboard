@@ -285,3 +285,45 @@ h3{
     font-size: 4rem;
     color: var(--light-red);
 }
+
+
+/* Logo */
+
+.logoContainerAlignment {
+    position: fixed;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.logoContainer {
+    margin-bottom: 25px;
+
+    width: 400px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.logoContainer svg {
+    aspect-ratio: 2 / 1;
+    height: 100%;
+}
+
+.logoTitleContainer {
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+}
+
+.logoTitleContainer h2 {
+    font-size: 1.5rem;
+    color: var(--dark-gray);
+}
