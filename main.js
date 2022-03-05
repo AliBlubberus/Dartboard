@@ -11,7 +11,7 @@ var gameWindow;
 const serverURL = "localhost";
 const serverPort = 3000;
 
-const USER_DATA_PATH = path.join(process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share"), "/json");
+const USER_DATA_PATH = path.join(process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share"), "/Dartboard/json");
 
 const PLAYERS_PATH = path.join(USER_DATA_PATH, "/players.json");
 const LATEST_GAME_PATH = path.join(USER_DATA_PATH, "/latestGame.json");
