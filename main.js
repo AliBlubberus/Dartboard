@@ -1,6 +1,7 @@
 const {app, BrowserWindow, ipcMain, ipcRenderer} = require("electron");
 const fs = require("fs");
 const http = require("http");
+const path = require("path");
 
 delete require('electron').nativeImage.createThumbnailFromPath; //For safety reasons
 
@@ -10,17 +11,21 @@ var gameWindow;
 const serverURL = "localhost";
 const serverPort = 3000;
 
+const USER_DATA_PATH = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
+const PLAYERS_PATH = path.join(USER_DATA_PATH, "/json/players.json");
+const LATEST_GAME_PATH = path.join(USER_DATA_PATH, "/json/latestGame.json");
+
 //Load Player Data
 var rawPlayerData;
 
 function reloadPlayerData() {
     try {
-        rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+        rawPlayerData = JSON.parse(fs.readFileSync(PLAYERS_PATH));
     }
     catch (err) {
         console.error(err);
-        fs.writeFileSync("./json/players.json", "[]");
-        rawPlayerData = JSON.parse(fs.readFileSync("./json/players.json"));
+        fs.writeFileSync(PLAYERS_PATH, "[]");
+        rawPlayerData = JSON.parse(fs.readFileSync(PLAYERS_PATH));
     }
 }
 
@@ -60,7 +65,7 @@ ipcMain.on("loadPlayerData", (event, arg) => {
 ipcMain.on("loadLatestGame", (event, arg) => {
     let file;
     try {
-        file = JSON.parse(fs.readFileSync("./json/latestGame.json"));
+        file = JSON.parse(fs.readFileSync(LATEST_GAME_PATH));
     }
     catch {
         file = null;
@@ -69,7 +74,7 @@ ipcMain.on("loadLatestGame", (event, arg) => {
 });
 
 ipcMain.on("deleteLatestGame", (event, arg) => {
-    fs.writeFileSync("./json/latestGame.json", "{}");
+    fs.writeFileSync(LATEST_GAME_PATH, "{}");
     event.returnValue = null;
 });
 
@@ -129,7 +134,7 @@ ipcMain.on("handleFinishedGame", (event, arg) => {
     rawPlayerData[getGlobalPlayerIndexByName(arg.winner.data.name)].gamesWon++;
     gameWindow.close();
     overrideLocalPlayerData();
-    fs.writeFileSync("./json/latestGame.json", JSON.stringify(arg));
+    fs.writeFileSync(LATEST_GAME_PATH, JSON.stringify(arg));
     event.returnValue = null;
 });
 
@@ -147,7 +152,7 @@ function getGlobalPlayerIndexByName(name) {
 
 function isolatePlayerData(elements) {
     let isolatedData = [];
-    let data = JSON.parse(fs.readFileSync("./json/players.json"));
+    let data = JSON.parse(fs.readFileSync(PLAYERS_PATH));
 
     elements.forEach(index => {
         isolatedData[isolatedData.length] = data[index];
@@ -275,5 +280,5 @@ function overrideLocalPlayerData(data) {
         rawPlayerData = data;
     }
 
-    fs.writeFileSync("./json/players.json", string);
+    fs.writeFileSync(PLAYERS_PATH, string);
 }
