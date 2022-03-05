@@ -41,7 +41,7 @@ app.whenReady().then(() => {
     //load dashboard
     mainWindow.loadFile("frontend/index.htm");
     //mainWindow.webContents.on("did-finish-load", downloadPatch(mainWindow));
-    //mainWindow.setMenu(null);
+    mainWindow.setMenu(null);
 });
 
 
