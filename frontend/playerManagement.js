@@ -189,7 +189,7 @@ function deletePlayer(index) {
     console.log("Deleting " + rawPlayerData[index].name + "...");
 
     let latestGame = ipcRenderer.sendSync("loadLatestGame");
-    if (latestGame.playerData) {
+    if (latestGame && latestGame.playerData) {
         let contains = false;
         latestGame.playerData.forEach((element) => {
             if (element.name == rawPlayerData[index].name) contains = true;
