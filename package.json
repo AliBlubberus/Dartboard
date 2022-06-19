@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^12.2.3",
+    "electron": "^15.5.5",
     "electron-packager": "^15.3.0",
     "electron-wix-msi": "^3.2.0"
   },
